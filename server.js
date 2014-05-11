@@ -20,7 +20,10 @@ var quotes = [
   }
 ];
 
-var server = Hapi.createServer('0.0.0.0', parseInt(process.env.PORT, 10) || 3000);
+// var config = { docs: true };
+// TODO : generating the following error : [1] the key docs is not allowed
+
+var server = Hapi.createServer('0.0.0.0', parseInt(process.env.PORT, 10) || 3000, config);
 
 server.route({
   method: 'GET'
@@ -74,7 +77,7 @@ server.route({
       quotes.push(newQuote);
       reply(newQuote);
     }
-  /*, validate: {
+  /*, validate: { // TODO generating error, cannot find the Hapy.types.String() function ?!!?
       payload: {
         author: Hapi.types.String().required()
       , text: Hapi.types.String().required()
