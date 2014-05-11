@@ -1,0 +1,28 @@
+{
+  "name": "mpProxy",
+  "version": "0.0.1",
+  "description": "Proxy for MuseumPlus RIA. Cache data, additionnal information stored",
+  "main": "index.js",
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rdewolff/mpProxy.git"
+  },
+  "keywords": [
+    "zetcom",
+    "MuseumPlus",
+    "RIA",
+    "hapi"
+  ],
+  "author": "Romain de Wolff",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rdewolff/mpProxy/issues"
+  },
+  "homepage": "https://github.com/rdewolff/mpProxy",
+  "dependencies": {
+    "hapi": "~4.1.0"
+  }
+}
