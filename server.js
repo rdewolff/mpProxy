@@ -1,29 +1,10 @@
 var Hapi = require('hapi');
-
-// data
-var quotes = [
-  {
-    author: 'Audrey Hepburn'
-  , text: 'Nothing is impossible, the word itself says \'I\'m possible\'!'
-  }
-, {
-    author: 'Walt Disney'
-  , text: 'You may not realize it when it happens, but a kick in the teeth may be the best thing in the world for you'
-  }
-, {
-    author: 'Unknown'
-  , text: 'Even the greatest was once a beginner. Don\'t be afraid to take that first step.'
-  }
-, {
-    author: 'Neale Donald Walsch'
-  , text: 'You are afraid to die, and you\'re afraid to live. What a way to exist.'
-  }
-];
+var mongoose = require('mongoose');
 
 // var config = { docs: true };
 // TODO : generating the following error : [1] the key docs is not allowed
 
-var server = Hapi.createServer('0.0.0.0', parseInt(process.env.PORT, 10) || 3000, config);
+var server = Hapi.createServer('0.0.0.0', parseInt(process.env.PORT, 10) || 3000);
 
 server.route({
   method: 'GET'
@@ -74,7 +55,7 @@ server.route({
         author: req.payload.author
       , text: req.payload.text
       };
-      quotes.push(newQuote);
+      quotes.push(newQuote); 
       reply(newQuote);
     }
   /*, validate: { // TODO generating error, cannot find the Hapy.types.String() function ?!!?

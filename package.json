@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/rdewolff/mpProxy",
   "dependencies": {
-    "hapi": "~4.1.0"
+    "hapi": "~4.1.0",
+    "mongoose": "~3.8.9"
   }
 }
