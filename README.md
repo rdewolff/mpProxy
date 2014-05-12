@@ -1,3 +1,2 @@
-# mpProxy
-
-MuseumPlus Proxy !
+# testProjectSails
+### a Sails application
