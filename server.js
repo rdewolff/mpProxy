@@ -1,5 +1,20 @@
-var Hapi = require('hapi');
-var mongoose = require('mongoose');
+var Hapi = require('hapi'); // serving api to it's best
+var mongoose = require('mongoose'); // elegant mongodb object modeling for node.js
+var cache = require('./dbSchema').Cache;
+
+mongoose.connect('mongodb://localhost/mpProxy');
+
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback() {
+  console.log('Connected to database!');
+  var c = new Cache({query: 'meuh', result: 'result data xml'});
+  console.log(c.query);
+  c.save(function (err, c) {
+    if (err) return console.error(err);
+    console.log('Saved data!');
+  });
+});
 
 var server = Hapi.createServer('0.0.0.0', parseInt(process.env.PORT, 10) || 3000);
 
