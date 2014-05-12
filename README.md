@@ -1,3 +1,3 @@
-# mpProxy
+# MuseumPlus Proxy !
 
-MuseumPlus Proxy !
+### This version is built using Hapi
