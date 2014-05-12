@@ -1,10 +1,19 @@
 var Hapi = require('hapi');
 var mongoose = require('mongoose');
 
-// var config = { docs: true };
-// TODO : generating the following error : [1] the key docs is not allowed
-
 var server = Hapi.createServer('0.0.0.0', parseInt(process.env.PORT, 10) || 3000);
+
+server.route({
+  method: 'GET',
+  path: '/status',
+  handler: function(req, reply) {
+    reply('No data');
+  }
+});
+
+/******************************************************************************
+ Hapi hacking
+ *****************************************************************************/
 
 server.route({
   method: 'GET'
