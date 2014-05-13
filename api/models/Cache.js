@@ -10,6 +10,7 @@ module.exports = {
 
   attributes: {
 
+  	cacheId: 'INT',
   	query: 'STRING',
     result: 'STRING',
     created: 'DATETIME'

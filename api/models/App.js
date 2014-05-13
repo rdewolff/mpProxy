@@ -10,6 +10,7 @@ module.exports = {
 
   attributes: {
 
+  	appId: 'INT',
   	property: 'STRING',
     value: 'STRING',
     created: 'DATETIME'
