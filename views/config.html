@@ -1,16 +1,42 @@
 <index:>
-  <div class="jumbotron">
-    <div class="container">
-      <h1>Config</h1>
-      <p>Configure mpProxy here</p>
-      <p>
-        <a class="btn btn-lg btn-primary" href="/people/new" role="button">
-          Blah
-        </a>
-      </p>
-      <p>
-      <dropdown class="btn-group" options="{{_page.numbers}}"></dropdown>
-      </p>
-      
+  <div class="container">
+    
+  <h2>Config</h2>
+
+    <form role="form" class="well" on-submit="done()">
+      <div class="row">
+        <div class="col-xs-12">
+          <field label="Source" has-error="{{nameError}}">
+            <input type="text" class="form-control" as="nameInput" value="{{config.URL}}" autofocus="{{!person.id}}">
+          </field>
+          <field label="Username">
+            <input type="text" class="form-control" value="{{config.username}}">
+          </field>
+          <field label="Password">
+            <input type="text" class="form-control" value="{{config.password}}">
+          </field>
+          <field label="Synchronize">
+            <dropdown value="{{config.synchronize}}">
+              <option>Manual</option>
+              <option>Every day (in construction)</option>
+              <option>Every week (in construction)</option>
+              <option>Live! (in construction)</option>
+            </dropdown>
+          </field>
+        </div>
+
+      </div>
+
+      <button type="submit" class="btn btn-primary">
+        Save
+      </button>
+      {{unless person.id}}
+        &sp;<button type="button" class="btn btn-link" on-click="cancel()">Cancel</button>
+      {{/}}
+    </form>
+
+  <field: element="field">
+    <div class="form-group{{if @hasError}} has-error{{/if}}">
+      <label class="control-label">{{@label}}</label>
+      {{@content}}
     </div>
-  </div>

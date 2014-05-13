@@ -1,3 +1,5 @@
+process.env.MONGO_URL = 'mongodb://localhost:27017/mpProxyDerby'; // replace the default name in the 
+
 var app = module.exports = require('derby').createApp('directory', __filename);
 app.use(require('d-bootstrap'));
 app.loadViews(__dirname + '/views');
@@ -9,9 +11,29 @@ app.get('/', function(page, model) {
   page.render('home');
 });
 
-app.get('/config', function(page, model) {
-  page.render('config');
+app.get('/config', function(page, model, params, next) {
+  var config = model.at('config');
+  config.subscribe(function(err) {
+    //if (err) return next(err);
+    //if (!config.get()) return next(); // if empty? TODO check
+    model.ref('config', config)
+    page.render('config');
+  });
 });
+
+app.component('config', ConfigForm);
+function ConfigForm() {}
+
+ConfigForm.prototype.done = function() {
+  var model = this.model;
+  if (!model.get('config')) {
+    model.root.add('config', model.get('config'));
+  }
+}
+
+ConfigForm.prototype.cancel = function() {
+  app.history.back();
+}
 
 app.get('/people', function(page, model, params, next) {
   var peopleQuery = model.query('people', {});
