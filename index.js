@@ -12,13 +12,28 @@ app.get('/', function(page, model) {
 });
 
 app.get('/config', function(page, model, params, next) {
-  var config = model.at('config');
-  config.subscribe(function(err) {
+
+  model.subscribe('config.username', function() {
+    page.render('config');
+  });
+  /*
+  // create the config if not exissting 
+  if (!model.get('config')) {
+    // model.root.add('config', {}); // empty values yet
+    
+  }
+  */
+
+  //model.set('_page.config', { "config" : {"username": "SuperAdmin"}});
+  // var config = model.at('config');
+  //return page.render('config');
+  /*config.subscribe(function(err) {
     //if (err) return next(err);
     //if (!config.get()) return next(); // if empty? TODO check
     model.ref('config', config)
     page.render('config');
   });
+*/
 });
 
 app.component('config', ConfigForm);
@@ -26,9 +41,11 @@ function ConfigForm() {}
 
 ConfigForm.prototype.done = function() {
   var model = this.model;
+  model.set('config', model.get('config'));
+  /*
   if (!model.get('config')) {
     model.root.add('config', model.get('config'));
-  }
+  }*/
 }
 
 ConfigForm.prototype.cancel = function() {
