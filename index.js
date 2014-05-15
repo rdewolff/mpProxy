@@ -1,4 +1,5 @@
-process.env.MONGO_URL = 'mongodb://localhost:27017/mpProxyDerby'; // replace the default name in the 
+// replace the default name in the 
+process.env.MONGO_URL = 'mongodb://localhost:27017/mpProxyDerby'; 
 
 var app = module.exports = require('derby').createApp('directory', __filename);
 app.use(require('d-bootstrap'));
@@ -12,40 +13,34 @@ app.get('/', function(page, model) {
 });
 
 app.get('/config', function(page, model, params, next) {
-
-  model.subscribe('config.username', function() {
-    page.render('config');
-  });
-  /*
-  // create the config if not exissting 
-  if (!model.get('config')) {
-    // model.root.add('config', {}); // empty values yet
-    
+  // find out the config from the database
+  //var config = model.query('config', {});
+/*
+  // if not in database, create a new config element to store the data
+  if (!config) {
+    model.root.add('config', {username: "Romain", password: "Lapin", synchronize: 1, URL: "http://"}); // empty values yet 
   }
-  */
 
-  //model.set('_page.config', { "config" : {"username": "SuperAdmin"}});
-  // var config = model.at('config');
-  //return page.render('config');
-  /*config.subscribe(function(err) {
-    //if (err) return next(err);
-    //if (!config.get()) return next(); // if empty? TODO check
-    model.ref('config', config)
+  // link data and display page
+  config.subscribe(function(err) {
+    if (err) return next(err);
+    // config.ref('_page.config');
     page.render('config');
   });
 */
+  page.render('config2');
 });
 
 app.component('config', ConfigForm);
 function ConfigForm() {}
 
 ConfigForm.prototype.done = function() {
+
   var model = this.model;
-  model.set('config', model.get('config'));
-  /*
-  if (!model.get('config')) {
-    model.root.add('config', model.get('config'));
-  }*/
+
+  // model.set('config', model.get('config'));
+  model.set('_page.config', model.get("config") );
+
 }
 
 ConfigForm.prototype.cancel = function() {
@@ -102,8 +97,9 @@ EditForm.prototype.done = function() {
     this.nameInput.focus();
     return;
   }
-
+  console.log(model.get('person.id'));
   if (!model.get('person.id')) {
+
     model.root.add('people', model.get('person'));
   }
   app.history.push('/people');
