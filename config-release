@@ -1,0 +1,13 @@
+default-ip               : 0.0.0.0
+default-port             : 3000
+
+name                     : mpProxy
+version                  : 1.01
+secret                   : your-secret-key
+author                   : Zetcom
+
+// CloudFlare cdnjs
+angular-version          : 1.2.15
+
+// CloudFlare cdnjs
+angular-i18n-version     : 1.2.10
