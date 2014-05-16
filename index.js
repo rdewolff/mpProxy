@@ -12,40 +12,34 @@ app.get('/', function(page, model) {
   page.render('home');
 });
 
-app.get('/config', function(page, model, params, next) {
-  // find out the config from the database
-  //var config = model.query('config', {});
-/*
-  // if not in database, create a new config element to store the data
-  if (!config) {
-    model.root.add('config', {username: "Romain", password: "Lapin", synchronize: 1, URL: "http://"}); // empty values yet 
-  }
+/* ADMIN */
 
-  // link data and display page
-  config.subscribe(function(err) {
-    if (err) return next(err);
-    // config.ref('_page.config');
-    page.render('config');
+app.get('/admin', function(page, model, params, next) {
+
+  model.subscribe('admin', function() {
+    page.render('admin');
   });
-*/
-  page.render('config2');
+
 });
 
-app.component('config', ConfigForm);
-function ConfigForm() {}
+/*
+app.component('admin', AdminForm);
+function AdminForm() {}
 
-ConfigForm.prototype.done = function() {
+AdminForm.prototype.done = function() {
 
   var model = this.model;
 
-  // model.set('config', model.get('config'));
-  model.set('_page.config', model.get("config") );
+  // model.set('_page.admin', model.get("admin") );
 
 }
 
-ConfigForm.prototype.cancel = function() {
+AdminForm.prototype.cancel = function() {
   app.history.back();
-}
+}*/
+
+
+/* PEOPLE */
 
 app.get('/people', function(page, model, params, next) {
   var peopleQuery = model.query('people', {});
