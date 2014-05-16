@@ -22,21 +22,11 @@ app.get('/admin', function(page, model, params, next) {
 
 });
 
-/*
 app.component('admin', AdminForm);
 function AdminForm() {}
-
-AdminForm.prototype.done = function() {
-
-  var model = this.model;
-
-  // model.set('_page.admin', model.get("admin") );
-
-}
-
-AdminForm.prototype.cancel = function() {
-  app.history.back();
-}*/
+AdminForm.prototype.runSynchronizer = function() {
+  console.log("bleh");
+};
 
 
 /* PEOPLE */

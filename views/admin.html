@@ -21,9 +21,12 @@
               <option>Live (Dev only!)</option>
             </dropdown>
           </field>
+          <button type="button" class="btn" on-click="runSynchronizer()">Run synchronizer</button>
+          <field label="Log" has-error="">
+            <textarea class="form-control" readonly>{{admin.log}}</textarea>
+          </field>
         </div>
       </div>
-      Auto saved
     </form>
   </div>
 
