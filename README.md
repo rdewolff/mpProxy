@@ -1,3 +1,3 @@
-# MuseumPlus Proxy !
+# MuseumPlus Proxy
 
-### This version is built using Hapi
+### This version is built using total.js 
