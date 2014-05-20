@@ -9,4 +9,13 @@
 <!-- /app/controllers/ -->
 @{ngController('home', 'user')}
 
-<div ng-controller="HomeCtrl">{{ name }}</div>
+<div ng-controller="HomeCtrl">
+	<h1>{{ name }}</h1>
+  <h2>Bootstrap enabled here!</h1>
+	<br />
+	<ul class="list-group">
+		<li class="list-group-item" ng-repeat="user in users">{{ user.name }}</li>
+	</ul>
+</div>
+
+@{ngTemplate('list')}

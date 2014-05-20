@@ -1,5 +1,5 @@
 
-@{ng('angular', 'resource', 'route')}
+@{ng('angular', 'resource'  , 'route')}
 
 <!DOCTYPE html>
 <html ng-app="app">
@@ -10,12 +10,45 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="viewport" content="width=1024, user-scalable=yes" />
     <meta name="robots" content="all,follow" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" />
     @{head}
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     @{favicon('favicon.ico')}
+
 </head>
 <body>
 
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/">ZetCom</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="/">Home</a></li>
+          <li class=""><a href="/admin">Admin</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
     @{body}
+
+    <hr>
+
+    <button class="btn btn-primary" data-toggle="modal" data-target="#">
+      Footer button test
+    </button>
+
+    <hr>
+    <footer>
+      <p>&copy; Company 2013</p>
+    </footer>
+  </div>
+
 
 </body>
 </html>
