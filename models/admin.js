@@ -13,9 +13,11 @@ var adminSchema = mongoose.Schema({
   synchro: Number
 });
 
+/*
 var sychroCache = mongoose.Schema({
-  
+
 })
+*/
 
 module.exports = mongoose.model('User', userSchema);
 module.exports = mongoose.model('Admin', adminSchema);
