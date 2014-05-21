@@ -18,6 +18,7 @@ function adminConfig() {
   // TODO plug with data stored in DB
 
   console.log('admin config');
+  // self.layout(); // control what layout we want to use for that view
   self.view('admin');
-  
+
 }

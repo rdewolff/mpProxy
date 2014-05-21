@@ -9,4 +9,38 @@
 <!-- /app/controllers/ -->
 @{ngController('home', 'user', 'admin')}
 
-<div ng-controller="AdminCtrl">{{ name }}</div>
+<div ng-controller="AdminCtrl">{{ name }}
+  <form id="config" action="" method="post">
+    <form role="form" class="well" on-submit="done()">
+      <div class="row">
+        <div class="col-xs-12">
+
+          @{text('Source', { class: 'form-control', maxlength: 255, placeholder: 'Source', required: true })}
+
+          @{text('Username', { class: 'form-control', maxlength: 255, placeholder: 'Username', required: true })}
+
+          @{text('Password', { class: 'form-control', maxlength: 255, placeholder: 'Password', required: true })}
+
+          <!-- <label>Synchronize</label> -->
+          <select class="form-control">
+          @{options([{ name: 'Manual', value: 0 }, { name: 'Every day', value: 1 }, { name: 'Every week', value: 2 }, { name: 'Live (Dev only!)', value: 3 }], 0)}
+          </select>
+
+          @{text('Name', { class: 'form-control', maxlength: 30, placeholder: 'Your name', required: true })}
+
+          @{textarea('Description', { class: 'form-control', placeholder: 'Logs', required: true, readonly: true})}
+
+          <!-- TODO learn : not working : @{template('field', [{label: "Source"}])} -->
+          <!-- TODO learn : data not send to view : <div>@{view('field', { company: '858project.com' })}<div> -->
+
+          <hr>
+
+          <button class="btn btn-primary" data-toggle="modal" data-target="#">
+            Run synchronizer now
+          </button>
+
+        </div>
+      </div>
+    </form>
+  </form>
+</div>
