@@ -1,6 +1,7 @@
 exports.install = function(framework) {
   framework.route('/admin/', adminHome);
   framework.route('/admin/config/', adminConfig);
+  framework.route('/admin/config/save', adminConfigSave);
 }
 
 function adminHome() {
@@ -20,5 +21,9 @@ function adminConfig() {
   console.log('admin config');
   // self.layout(); // control what layout we want to use for that view
   self.view('admin');
+
+}
+
+function adminConfigSave() {  // always save as first ID
 
 }

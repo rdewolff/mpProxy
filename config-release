@@ -11,3 +11,6 @@ angular-version          : 1.2.15
 
 // CloudFlare cdnjs
 angular-i18n-version     : 1.2.10
+
+// Database
+database                 : mongodb://localhost/mpProxyTotaljs
