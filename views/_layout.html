@@ -15,7 +15,7 @@
     @{head}
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     @{favicon('favicon.ico')}
-
+    @{css('default.css')}
 </head>
 <body>
 
@@ -26,8 +26,8 @@
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="/">Home</a></li>
-          <li class=""><a href="/admin">Admin</a></li>
+          <li class="@{if url === '/'}active@{endif}"><a href="/">Home</a></li>
+          <li class="@{if url === '/admin/'}active@{endif}"><a href="/admin">Admin</a></li>
         </ul>
       </div>
     </div>
@@ -39,7 +39,8 @@
 
     <hr>
     <footer>
-      <p>&copy; Company 2013</p>
+      <p>&copy; Company 2013 | Path : @{url}
+      </p>
     </footer>
   </div>
 
