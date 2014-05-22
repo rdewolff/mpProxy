@@ -18,7 +18,8 @@
     "d-barchart-vanilla": "~0.1.0",
     "d-d3-barchart": "~0.1.0",
     "d-codemirror": "git+https://github.com/codeparty/d-codemirror.git",
-    "d-showdown": "git+https://github.com/codeparty/d-showdown.git"
+    "d-showdown": "git+https://github.com/codeparty/d-showdown.git",
+    "mpriaapi" : "git+https://github.com/rdewolff/mpRiaApi.git"
   },
   "keywords": [
     "zetcom",

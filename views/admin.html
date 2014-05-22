@@ -5,26 +5,33 @@
       <div class="row">
         <div class="col-xs-12">
           <field label="Source" has-error="">
-            <input type="text" class="form-control" as="nameInput" value="{{admin.URL}}" autofocus="1">
+            <input type="text" class="form-control" as="nameInput" value="{{#root.admin.URL}}" autofocus="1">
           </field>
           <field label="Username">
-            <input type="text" class="form-control" value="{{admin.username}}">
+            <input type="text" class="form-control" value="{{#root.admin.username}}">
           </field>
           <field label="Password">
-            <input type="text" class="form-control" value="{{admin.password}}">
+            <input type="text" class="form-control" value="{{#root.admin.password}}">
           </field>
+        </div>
+        <div class="col-xs-6">
           <field label="Synchronize">
-            <dropdown value="{{admin.synchronize}}">
+            <dropdown value="{{#root.admin.synchronize}}">
               <option>Manual</option>
               <option>Every day</option>
               <option>Every week</option>
               <option>Live (Dev only!)</option>
             </dropdown>
           </field>
-          <button type="button" class="btn" on-click="runSynchronizer()">Run synchronizer</button>
+        </div>
+        <div class="col-xs-6">
+            <b>Last sync :</b> {{#root.admin.lastsync}}
+        </div>
+        <div class="col-xs-12">
           <field label="Log" has-error="">
-            <textarea class="form-control" readonly>{{admin.log}}</textarea>
+            <textarea class="form-control" rows="7" readonly>{{#root.admin.log}}</textarea>
           </field>
+          <button type="button" class="btn" on-click="runSynchronizer()">Run synchronizer</button>
         </div>
       </div>
     </form>
@@ -35,4 +42,3 @@
       <label class="control-label">{{@label}}</label>
       {{@content}}
     </div>
-

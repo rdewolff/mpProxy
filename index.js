@@ -1,5 +1,5 @@
-// replace the default name in the 
-process.env.MONGO_URL = 'mongodb://localhost:27017/mpProxyDerby'; 
+// replace the default name in the
+process.env.MONGO_URL = 'mongodb://localhost:27017/mpProxyDerby';
 
 var app = module.exports = require('derby').createApp('directory', __filename);
 app.use(require('d-bootstrap'));
@@ -25,9 +25,17 @@ app.get('/admin', function(page, model, params, next) {
 app.component('admin', AdminForm);
 function AdminForm() {}
 AdminForm.prototype.runSynchronizer = function() {
-  console.log("bleh");
+  var model = this.model;
+  model.root.set('admin.lastsync', Date());
 };
 
+/* MAPPING */
+
+app.get('/mapping', function(page, model, params, next) {
+
+  page.render('mapping')
+
+});
 
 /* PEOPLE */
 
