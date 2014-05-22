@@ -33,7 +33,9 @@ AdminForm.prototype.runSynchronizer = function() {
 
 app.get('/mapping', function(page, model, params, next) {
 
-  page.render('mapping')
+  model.subscribe('mapping', function() {
+    page.render('mapping')
+  });
 
 });
 
