@@ -16,9 +16,12 @@
         <div class="col-xs-12">
 
           <div id="myAlert" class="alert success">
-            <div class="alert-danger">TBD</div>
-          </div>
 
+            <div class="form-group">
+            @{textarea('log', { class: 'form-control', placeholder: 'Logs', required: false, readonly: true})}
+            </div>
+
+          </div>
         </div>
       </div>
     </form>
