@@ -11,13 +11,14 @@
 
 <div ng-controller="HomeCtrl">
   <h1>{{ name }}</h1>
-  Filter result : <input type="text" ng-model="searchText">
   <h2>Bootstrap enabled here!</h1>
-	<br />
+  <p>
+  	Live filter : <input type="text" ng-model="searchText" autofocus="true"> <br />
+  </p>
 	<ul class="list-group">
 		<li class="list-group-item" ng-repeat="user in users | filter:searchText">
-            {{ user.name}}
-        </li>
+        	{{ user.name }}
+    	</li>
 	</ul>
 </div>
 
