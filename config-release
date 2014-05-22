@@ -14,3 +14,8 @@ angular-i18n-version     : 1.2.10
 
 // Database
 database                 : mongodb://localhost/mpProxyTotaljs
+
+// TODO : move to DB
+username				 : SuperAdmin
+password				 : SuperAdmin
+sourceUrl 				 : https://mp-ria-15.zetcom.com/MpWeb-apParisPuig

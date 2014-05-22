@@ -14,8 +14,8 @@ var adminSchema = mongoose.Schema({
 });
 
 /*
-var sychroCache = mongoose.Schema({
-
+var adminMappingSchema = mongoose.Schema({
+	
 })
 */
 

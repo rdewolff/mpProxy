@@ -15,11 +15,13 @@ function adminHome() {
 function adminConfig() {
   var self = this;
   // TODO plug with data stored in DB
-
-  console.log('admin config');
-  console.dir(this);
+  
   // self.layout(); // control what layout we want to use for that view
-  self.view('adminConfig');
+  self.view('adminConfig', {
+    source: framework.config.sourceUrl, 
+    username: framework.config.username, 
+    password: framework.config.password
+  });
 
 }
 
