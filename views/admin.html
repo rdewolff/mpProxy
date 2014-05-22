@@ -8,37 +8,14 @@
 
 <!-- /app/controllers/ -->
 @{ngController('home', 'user', 'admin')}
-<h1>Admin config</h1>
+<h1>Admin home</h1>
 <div ng-controller="AdminCtrl">
   <form id="config" action="" method="post">
     <form role="form" class="well" on-submit="done()">
       <div class="row">
         <div class="col-xs-12">
 
-          @{text('Source', { "ng-model": "admin.source", class: 'form-control', maxlength: 255, placeholder: 'Source', required: false })}
-
-          @{text('Username', { class: 'form-control', maxlength: 255, placeholder: 'Username', required: false })}
-
-          @{text('Password', { class: 'form-control', maxlength: 255, placeholder: 'Password', required: false })}
-
-          <!-- <label>Synchronize</label> -->
-          <select class="form-control">
-          @{options([{ name: 'Manual', value: 0 }, { name: 'Every day', value: 1 }, { name: 'Every week', value: 2 }, { name: 'Live (Dev only!)', value: 3 }], 0)}
-          </select>
-
-          @{text('Name', { class: 'form-control', maxlength: 30, placeholder: 'Your name', required: false })}
-
-          <!-- TODO learn : not working : @{template('field', [{label: "Source"}])} -->
-          <!-- TODO learn : data not send to view : <div>@{view('field', { company: '858project.com' })}<div> -->
-
-          <button class="btn" ng-click="synchro()">
-            Run synchronizer now
-          </button>
-
-          @{textarea('Description', { class: 'form-control', placeholder: 'Logs', required: false, readonly: true})}
-
-          <button class="btn btn-primary" ng-click="save()">Save</button>
-          <button class="btn btn-secondary" ng-click="cancel()">Cancel</button>
+          Welcome on the admin zone
 
         </div>
       </div>

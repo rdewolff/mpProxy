@@ -1,0 +1,27 @@
+@{meta('title', 'description', 'keywords')}
+
+<!-- /app/css/ -->
+@{ngStyle('app')}
+
+<!-- cdnjs -->
+@{ngLocale('en-us')}
+
+<!-- /app/controllers/ -->
+@{ngController('home', 'user', 'admin')}
+<h1>Admin mapping</h1>
+<div ng-controller="AdminCtrl">
+  <form id="config" action="" method="post">
+    <form role="form" class="well" on-submit="done()">
+      <div class="row">
+        <div class="col-xs-12">
+
+          <div id="myAlert" class="alert success">
+            <div class="alert-danger">TBD</div>
+          </div>
+
+        </div>
+      </div>
+    </form>
+  </form>
+</div>
+
