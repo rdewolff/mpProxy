@@ -15,7 +15,7 @@ function adminHome() {
 function adminConfig() {
   var self = this;
   // TODO plug with data stored in DB
-  
+  // TODO or use with the "storage" module : https://github.com/totaljs/modules/tree/master/storage
   // self.layout(); // control what layout we want to use for that view
   self.view('adminConfig', {
     Source: framework.config.sourceUrl, 
@@ -26,6 +26,7 @@ function adminConfig() {
 }
 
 function adminConfigSave() {  
+
   // always save as first ID
   // TODO
 }
