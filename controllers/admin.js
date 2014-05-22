@@ -18,9 +18,9 @@ function adminConfig() {
   
   // self.layout(); // control what layout we want to use for that view
   self.view('adminConfig', {
-    source: framework.config.sourceUrl, 
-    username: framework.config.username, 
-    password: framework.config.password
+    Source: framework.config.sourceUrl, 
+    Username: framework.config.username, 
+    Password: framework.config.password
   });
 
 }

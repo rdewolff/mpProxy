@@ -14,32 +14,46 @@
     <form role="form" class="well" on-submit="done()">
       <div class="row">
         <div class="col-xs-12">
-          
-          Source : @{model.source} <br />
-          Username : @{model.username} <br />
-          Password : @{model.password} <br />
+
+          <p>Actually, these data are constant stored in the main config files.</p>
+
+          <div class="form-group">
+          <!-- this is binded with the model object "Source" by Total.js -->
           @{text('Source', { "ng-model": "admin.source", class: 'form-control', maxlength: 255, placeholder: 'Source', required: false})}
+          </div>
 
+          <div class="form-group">
           @{text('Username', { class: 'form-control', maxlength: 255, placeholder: 'Username', required: false}, "test")}
+          </div>
 
+          <div class="form-group">
           @{text('Password', { class: 'form-control', maxlength: 255, placeholder: 'Password', required: false })}
+          </div>
 
+          <div class="form-group">
           <!-- <label>Synchronize</label> -->
           <select class="form-control">
           @{options([{ name: 'Manual', value: 0 }, { name: 'Every day', value: 1 }, { name: 'Every week', value: 2 }, { name: 'Live (Dev only!)', value: 3 }], 0)}
           </select>
+          </div>
 
           <!-- TODO learn : not working : @{template('field', [{label: "Source"}])} -->
           <!-- TODO learn : data not send to view : <div>@{view('field', { company: '858project.com' })}<div> -->
 
+          <div class="form-group">
           <button class="btn" ng-click="synchro()">
             Run synchronizer now
           </button>
+          </div>
 
+          <div class="form-group">
           @{textarea('Description', { class: 'form-control', placeholder: 'Logs', required: false, readonly: true})}
+          </div>
 
-          <button class="btn btn-primary" ng-click="save()">Save</button>
+          <div class="form-group">
+          <button class="btn btn-primary" ng-click="save()">Save</button> &nbsp;
           <button class="btn btn-secondary" ng-click="cancel()">Cancel</button>
+          </div>
 
         </div>
       </div>
