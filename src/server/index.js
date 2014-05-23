@@ -12,7 +12,7 @@ process.env.REDIS_PORT = config.get('redis:port');
 process.env.REDIS_PASSWORD = config.get('redis:pass');
 
 var options = {
-    static: __dirname + './../public'
+    static: __dirname + './../../public'
 };
 
 exports.run = function (app, options, cb) {

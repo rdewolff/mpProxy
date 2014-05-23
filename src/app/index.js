@@ -16,6 +16,12 @@ app.get('/', function(page, model) {
   page.render('home');
 });
 
+// sorry but we need jquery, especially for ajax
+if (!typeof window == 'undefined') {
+  if (!window.$) require('../../public/jquery-1.8.3.min.js');
+}
+
+
 /* ADMIN */
 
 app.get('/admin', function(page, model, params, next) {
@@ -29,6 +35,9 @@ app.get('/admin', function(page, model, params, next) {
 app.component('admin', AdminForm);
 function AdminForm() {}
 AdminForm.prototype.runSynchronizer = function() {
+
+  $.get('/sync');
+
   var model = this.model;
   model.root.set('admin.lastsync', Date());
 };

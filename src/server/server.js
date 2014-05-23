@@ -1,3 +1,5 @@
+var ria = require('mpRiaApi');
+
 // 4-ый экспресс
 var express = require('express');
 
@@ -79,6 +81,22 @@ exports.setup = function setup(app, options) {
 
     // Если бы у на были обычные экспрессовские роуты - мы бы положили их СЮДА
 
+    // mpRiaApi call goes HERE! Yay!
+    expressApp.get('/sync', function (req, res, next) {
+
+      var model = req.getModel();
+
+      
+
+      console.log("SYNCHRONIZE ME BABY");
+
+      // run the sync process :)
+
+
+
+    });
+
+
     // Маршрут по умолчанию - генерируем 404 ошибку
     expressApp.all('*', function (req, res, next) {
         next('404: ' + req.url);
@@ -99,5 +117,3 @@ function createUserId(req, res, next) {
     model.set('_session.userId', userId);
     next();
 }
-
-
