@@ -36,8 +36,6 @@ app.component('admin', AdminForm);
 function AdminForm() {}
 AdminForm.prototype.runSynchronizer = function() {
 
-  $.get('/sync');
-
   var model = this.model;
   model.root.set('admin.lastsync', Date());
 };

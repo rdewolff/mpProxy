@@ -47,6 +47,20 @@ exports.setup = function setup(app, options) {
         redis: redisClient
     });
 
+    // server side model watching
+    var model = store.createModel();
+    // subscribe to changes
+    model.subscribe('admin', function(err, msg){
+
+      model.on('change', 'admin.*', function(id, message) {
+
+        console.log("Change detected on the model from the server side!");
+
+      });
+
+    });
+
+
     var expressApp = express()
 
     // Here, the application gives its "bundle"
@@ -82,23 +96,21 @@ exports.setup = function setup(app, options) {
     // TODO : what??
     // If there were regular on ekspressovskie Roth - we would put them in.
 
+/* commented to avoid conflict with other test to detect model change
     // mpRiaApi call goes HERE! Yay!
     expressApp.get('/sync', function (req, res, next) {
 
       var model = req.getModel();
 
+      // that seems the wrong way to do it! Geesh!
       model.on('change', 'admin.lastsync', function() {
         console.log('data change!');
       });
-
       console.log("SYNCHRONIZE ME BABY");
-
-      // run the sync process :)
-
-
+      // run the sync process
 
     });
-
+*/
 
     // Default Route - generate a 404 error
     expressApp.all('*', function (req, res, next) {
