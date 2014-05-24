@@ -65,20 +65,20 @@ exports.setup = function setup(app, options) {
         ria.setCreditentials(model.root.get('sync.username'), model.root.get('sync.password'));
         ria.setInstanceUrl(model.root.get('sync.url'));
 
+        // TODO handle error
         ria._login(function() {
-          ria.getModuleListAsJson(function(err, data) {
+          ria.getModuleList(function(err, data) {
             model.root.set('sync.log', model.root.get('sync.log') + '\nError: ' + err + 'Data' + data );
-            // TODO handle error
-            
+            // store the data
             model.root.set('sync.modules', data);
 
             console.dir('\nerror: ' + err);
             console.log("\nData: %j", data); // show all json format
-          }, 'json');
+            model.root.set('sync.end', Date());
+            model.root.set('sync.inProgress', false); // finished
+            model.root.set('sync.duration', (Date.parse(model.root.get('sync.end'))-Date.parse(model.root.get('sync.start')))/1000)
+          }, 'array');
         });
-
-        model.root.set('sync.end', Date());
-        model.root.set('sync.inProgress', false); // finished
 
       });
 

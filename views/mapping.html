@@ -5,21 +5,28 @@
       <div class="row">
         <div class="col-xs-12">
           <field label="Module">
-            <dropdown value="{{#root.admin.synchronize}}" options="{{[
+            <dropdown value="" options="{{#root.sync.modules}}"></dropdown>
+            <!-- This static version works :
+            <dropdown value="" options="{{[
                 {content: 'Collection'}
               , {content: 'Artist'}
               , {content: 'Zouze'}
               ]}}">
-            </dropdown>
+            </dropdown>-->
           </field>
           <field label="Field" has-error="">
-            <input type="text" class="form-control" value="?">
+            <dropdown value="{{#root.sync.fields}}" options="{{[
+                {value: 1, content: 'Collection'}
+              , {value: 2, content: 'Artist'}
+              , {value: 3, content: 'Zouze'}
+              ]}}">
+            </dropdown>
           </field>
           <field label="Filter">
             <textarea class="form-control">?</textarea>
           </field>
           <field label="Preview" has-error="">
-            <textarea class="form-control" readonly>{{#root.admin.log}}</textarea>
+            <textarea class="form-control" readonly>{{#root.sync.log}}</textarea>
           </field>
         </div>
       </div>

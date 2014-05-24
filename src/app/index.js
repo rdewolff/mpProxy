@@ -48,11 +48,17 @@ AdminForm.prototype.stopSynchronizer = function() {
   model.root.set('sync.inProgress', false); // force finish
 }
 
+AdminForm.prototype.clearSynchronizerLog = function() {
+  console.log("client clearSynchronizerLog");
+  var model = this.model;
+  model.root.set('sync.log', '');
+}
+
 /* MAPPING */
 
 app.get('/mapping', function(page, model, params, next) {
 
-  model.subscribe('mapping', function() {
+  model.subscribe('sync', function() {
     page.render('mapping')
   });
 

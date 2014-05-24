@@ -4,6 +4,7 @@ This version is built using Derby.js
 
 ## TODO
 
+- Synchronizer : Cancel button
 - Move the server config file higher in the directory structure
 
 
@@ -23,7 +24,6 @@ The client decide the run the synchronizer. The model information are stored in 
 4. The synchronization is running on the server side. All logs are added to ```sync.log```. These are display in the admin zone for following up.
 5. When the sychronization ends, the ```sync.inProgress``` is set to false.
 
-TBD Cancel button.
 
 
 ## Bootstrap references
