@@ -1,13 +1,13 @@
 var ria = require('mpRiaApi');
 
-// 4-ый экспресс
+// 4th Express
 var express = require('express');
 
-// В 4-ом экспрессе все middleware вынесены в отдельные модули
-// приходится каждый из них подключать по отдельности
+// In the fourth Express middleware all made ​​in separate modules
+// Account for each individually connected
 var session = require('express-session');
 
-//Подключаем store
+// Connect the store
 var connectStore, sessionStore;
 if (process.env.REDIS_HOST) {
     var redis = require('redis');
@@ -23,25 +23,25 @@ if (process.env.REDIS_HOST) {
     sessionStore = new connectStore({url: process.env.MONGO_URL});
 }
 
-// Обработчик ошибок - я вынес его в отдельную папочку,
-// чтобы не отвекал
+// Error handler - I brought it into separate folder,
+// Not to otvekal
 var midError = require('./error');
 
 var derby = require('derby');
 
-// BrowserChannel - аналог socket.io от Гугла - транспорт, используемый
-// дерби, для передачи данных из браузеров на сервер
+// BrowserChannel - analogue socket.io from Google - transport used
+// Derby, for transmitting data from the browser to the server
 
-// liveDbMongo - драйвер монги для дерби - умеет реактивно обновлять данные
+// LiveDbMongo - Mongo driver for the derby - can reactively update data
 var racerBrowserChannel = require('racer-browserchannel');
 var liveDbMongo = require('livedb-mongo');
 
-// Подключаем механизм создания бандлов browserify
+// Connect the mechanism for creating bundles browserify
 derby.use(require('racer-bundle'));
 
 exports.setup = function setup(app, options) {
 
-    // Инициализируем подкючение к БД (здесь же обычно подключается еще и redis)
+    // Initialize the database (here usually connects more and redis)
     var store = derby.createStore({
         db: liveDbMongo(process.env.MONGO_URL + '?auto_reconnect', {safe: true}),
         redis: redisClient
@@ -49,22 +49,22 @@ exports.setup = function setup(app, options) {
 
     var expressApp = express()
 
-    // Здесь приложение отдает свой "бандл"
-    // (т.е. здесь обрабатываются запросы к /derby/...)
+    // Here, the application gives its "bundle"
+    // (Thus processed requests to / derby / ...)
     expressApp.use(app.scripts(store));
 
     if (options && options.static) {
         expressApp.use(require('serve-static')(options.static));
     }
 
-    // Здесь в бандл добавляется клиетский скрипт browserchannel,
-    // и возвращается middleware обрабатывающее клиентские сообщения
-    // (browserchannel основан на longpooling - т.е. здесь обрабатываются
-    // запросы по адресу /channel)
+    // Here in the bundle is added klietsky script browserchannel,
+    // And returns processing middleware client messages
+    // (Browserchannel based on longpooling - ie processed here
+    // Requests to / channel)
     expressApp.use(racerBrowserChannel(store));
 
-    // В req добавляется метод getModel, позволяющий обычным
-    // express-овским котроллерам читать и писать в БД см. createUserId
+    // In req added method getModel, allows a standard
+    // Express-ovskim controller to read and write to the database, see createUserId
     expressApp.use(store.modelMiddleware());
 
     expressApp.use(require('cookie-parser')(process.env.SESSION_COOKIE));
@@ -75,18 +75,21 @@ exports.setup = function setup(app, options) {
 
     expressApp.use(createUserId);
 
-    // Здесь регистрируем контроллеры дерби-приложения,
-    // они будут срабатывать, когда пользователь будет брать страницы с сервера
+    // Here we register controllers derby applications
+    // They will be triggered when the user is taking pages from the server
     expressApp.use(app.router());
 
-    // Если бы у на были обычные экспрессовские роуты - мы бы положили их СЮДА
+    // TODO : what??
+    // If there were regular on ekspressovskie Roth - we would put them in.
 
     // mpRiaApi call goes HERE! Yay!
     expressApp.get('/sync', function (req, res, next) {
 
       var model = req.getModel();
 
-      
+      model.on('change', 'admin.lastsync', function() {
+        console.log('data change!');
+      });
 
       console.log("SYNCHRONIZE ME BABY");
 
@@ -97,19 +100,19 @@ exports.setup = function setup(app, options) {
     });
 
 
-    // Маршрут по умолчанию - генерируем 404 ошибку
+    // Default Route - generate a 404 error
     expressApp.all('*', function (req, res, next) {
         next('404: ' + req.url);
     });
 
-    // Обработчик ошибок
+    // Error handler
     expressApp.use(midError());
 
     return expressApp;
 }
 
-// Пробрасываем id-юзера из сессии в модель дерби,
-// если в сессии id нет - генерим случайное
+// Forwarding of user id-session model derby
+// If the session id is not - generate random
 function createUserId(req, res, next) {
     var model = req.getModel();
     var userId = req.session.userId;
