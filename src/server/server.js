@@ -50,11 +50,35 @@ exports.setup = function setup(app, options) {
     // server side model watching
     var model = store.createModel();
     // subscribe to changes
-    model.subscribe('admin', function(err, msg){
+    model.subscribe('sync', function(err, msg){
 
-      model.on('change', 'admin.*', function(id, message) {
+      // this listen on the change done by the client.
+      model.on('change', 'sync.start', function(id, message) {
 
-        console.log("Change detected on the model from the server side!");
+        console.log('Change detected on the model from the server side!');
+
+        model.root.set('sync.inProgress', true); // only 1 sync at a time
+
+        model.root.set('sync.log',  model.root.get('sync.log') + '\nRun synchronizer : ' + model.root.get('sync.lastsync'));
+
+        // mpRiaApi go!
+        ria.setCreditentials(model.root.get('sync.username'), model.root.get('sync.password'));
+        ria.setInstanceUrl(model.root.get('sync.url'));
+
+        ria._login(function() {
+          ria.getModuleListAsJson(function(err, data) {
+            model.root.set('sync.log', model.root.get('sync.log') + '\nError: ' + err + 'Data' + data );
+            // TODO handle error
+            
+            model.root.set('sync.modules', data);
+
+            console.dir('\nerror: ' + err);
+            console.log("\nData: %j", data); // show all json format
+          }, 'json');
+        });
+
+        model.root.set('sync.end', Date());
+        model.root.set('sync.inProgress', false); // finished
 
       });
 
@@ -92,25 +116,6 @@ exports.setup = function setup(app, options) {
     // Here we register controllers derby applications
     // They will be triggered when the user is taking pages from the server
     expressApp.use(app.router());
-
-    // TODO : what??
-    // If there were regular on ekspressovskie Roth - we would put them in.
-
-/* commented to avoid conflict with other test to detect model change
-    // mpRiaApi call goes HERE! Yay!
-    expressApp.get('/sync', function (req, res, next) {
-
-      var model = req.getModel();
-
-      // that seems the wrong way to do it! Geesh!
-      model.on('change', 'admin.lastsync', function() {
-        console.log('data change!');
-      });
-      console.log("SYNCHRONIZE ME BABY");
-      // run the sync process
-
-    });
-*/
 
     // Default Route - generate a 404 error
     expressApp.all('*', function (req, res, next) {

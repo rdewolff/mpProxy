@@ -5,18 +5,18 @@
       <div class="row">
         <div class="col-xs-12">
           <field label="Source" has-error="">
-            <input type="text" class="form-control" as="nameInput" value="{{#root.admin.URL}}" autofocus="1">
+            <input type="text" class="form-control" as="nameInput" value="{{#root.sync.url}}" autofocus="1">
           </field>
           <field label="Username">
-            <input type="text" class="form-control" value="{{#root.admin.username}}">
+            <input type="text" class="form-control" value="{{#root.sync.username}}">
           </field>
           <field label="Password">
-            <input type="text" class="form-control" value="{{#root.admin.password}}">
+            <input type="text" class="form-control" value="{{#root.sync.password}}">
           </field>
         </div>
         <div class="col-xs-6">
           <field label="Synchronize">
-            <dropdown value="{{#root.admin.synchronize}}">
+            <dropdown value="{{#root.sync.synchronize}}">
               <option>Manual</option>
               <option>Every day</option>
               <option>Every week</option>
@@ -25,13 +25,20 @@
           </field>
         </div>
         <div class="col-xs-6">
-            <b>Last sync :</b> {{#root.admin.lastsync}}
+            <b>Last sync :</b> {{#root.sync.lastsync}}
         </div>
         <div class="col-xs-12">
           <field label="Log" has-error="">
-            <textarea class="form-control" rows="7" readonly>{{#root.admin.log}}</textarea>
+            <textarea class="form-control" rows="7" readonly>{{#root.sync.log}}</textarea>
           </field>
+          <div class="btn-group">
+            <!--
+            <button type="button" class="btn btn-primary" on-click="runSynchronizer()" disabled="{{if #root.sync.inProgress}}true{{/}}">Run synchronizer</button>
+            <button type="button" class="btn btn-danger" on-click="stopSynchronizer()" disabled="{{if #root.sync.inProgress}}true{{/}}">Stop</button>
+          -->
           <button type="button" class="btn btn-primary" on-click="runSynchronizer()">Run synchronizer</button>
+          <button type="button" class="btn btn-danger" on-click="stopSynchronizer()">Stop</button>
+          </div>
         </div>
       </div>
     </form>

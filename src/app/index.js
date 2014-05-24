@@ -26,7 +26,7 @@ if (!typeof window == 'undefined') {
 
 app.get('/admin', function(page, model, params, next) {
 
-  model.subscribe('admin', function() {
+  model.subscribe('sync', function() {
     page.render('admin');
   });
 
@@ -34,11 +34,19 @@ app.get('/admin', function(page, model, params, next) {
 
 app.component('admin', AdminForm);
 function AdminForm() {}
-AdminForm.prototype.runSynchronizer = function() {
 
+AdminForm.prototype.runSynchronizer = function() {
+  console.log("client runSynchronizer");
   var model = this.model;
-  model.root.set('admin.lastsync', Date());
+  // this will trigger the change on the server side
+  model.root.set('sync.start', Date());
 };
+
+AdminForm.prototype.stopSynchronizer = function() {
+  console.log("client stopSynchronizer");
+  var model = this.model;
+  model.root.set('sync.inProgress', false); // force finish
+}
 
 /* MAPPING */
 
