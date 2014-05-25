@@ -55,10 +55,9 @@ exports.setup = function setup(app, options) {
       // this listen on the change done by the client.
       model.on('change', 'sync.start', function(id, message) {
 
-        console.log('Change detected on the model from the server side!');
+        console.log('sync.start');
 
         model.root.set('sync.inProgress', true); // only 1 sync at a time
-
         model.root.set('sync.log',  model.root.get('sync.log') + '\nRun synchronizer : ' + model.root.get('sync.lastsync'));
 
         // mpRiaApi go!
@@ -67,17 +66,34 @@ exports.setup = function setup(app, options) {
 
         // TODO handle error
         ria._login(function() {
-          ria.getModuleList(function(err, data) {
-            model.root.set('sync.log', model.root.get('sync.log') + '\nError: ' + err + 'Data' + data );
-            // store the data
-            model.root.set('sync.modules', data);
 
-            console.dir('\nerror: ' + err);
-            console.log("\nData: %j", data); // show all json format
+          // get the module list
+          ria.getModuleList(function(err, data) {
+            // debug
+            //model.root.set('sync.log', model.root.get('sync.log') + '\nError: ' + err + 'Data' + data );
+            // store the data
+            model.root.set('data.AvailableModules', data);
+            // debug
+            //console.dir('\nerror: ' + err);
+            // console.log("\nData: %j", JSONdata); // show all json format
+            model.root.set('sync.log', model.root.get('sync.log') + ' getModuleList() done.')
+          }, 'array');
+
+
+          // TODO do this for all the required modules
+          ria.getAllObjectFromModule('Object', function(err, data) {
+
+            model.root.set('cache.modules', data);
+            model.root.set('sync.log', model.root.get('sync.log') + ' getAllObjectFromModule() done.')
+            // debug
+            //model.root.set('sync.log', JSON.stringify(data));
+            // finish sync properly
             model.root.set('sync.end', Date());
             model.root.set('sync.inProgress', false); // finished
             model.root.set('sync.duration', (Date.parse(model.root.get('sync.end'))-Date.parse(model.root.get('sync.start')))/1000)
-          }, 'array');
+
+          }, 'json');
+
         });
 
       });
