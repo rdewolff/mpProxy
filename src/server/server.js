@@ -1,4 +1,5 @@
 var ria = require('mpRiaApi');
+var proxy = require('./proxy');
 
 // 4th Express
 var express = require('express');
@@ -72,6 +73,7 @@ exports.setup = function setup(app, options) {
             // debug
             //model.root.set('sync.log', model.root.get('sync.log') + '\nError: ' + err + 'Data' + data );
             // store the data
+            model.root.del('data.AvailableModules');
             model.root.set('data.AvailableModules', data);
             // debug
             //console.dir('\nerror: ' + err);
@@ -83,7 +85,13 @@ exports.setup = function setup(app, options) {
           // TODO do this for all the required modules
           ria.getAllObjectFromModule('Object', function(err, data) {
 
+            model.root.del('cache.modules');
             model.root.set('cache.modules', data);
+
+            // this will enhance the raw structure from RIA
+            proxy.parseData(data, model);
+            // TODO must be able to parse this from client side directly
+
             model.root.set('sync.log', model.root.get('sync.log') + ' getAllObjectFromModule() done.')
             // debug
             //model.root.set('sync.log', JSON.stringify(data));

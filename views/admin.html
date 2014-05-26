@@ -31,12 +31,16 @@
           <field label="Log" has-error="">
             <textarea class="form-control input-sm" rows="7" readonly>{{#root.sync.log}}</textarea>
           </field>
+          <field label="Parsed" has-error="">
+            <textarea class="form-control input-sm" rows="7" readonly>{{#root.data.AvailableModules}}</textarea>
+          </field>
           <div class="btn-group">
           <!-- TODO enable/disable depending on the status of the sync
           <button type="button" class="btn btn-primary" on-click="runSynchronizer()" disabled="{{if #root.sync.inProgress}}true{{/}}">Run synchronizer</button>
           <button type="button" class="btn btn-danger" on-click="stopSynchronizer()" disabled="{{if #root.sync.inProgress}}true{{/}}">Stop</button>
           -->
           <button type="button" class="btn btn-success" on-click="runSynchronizer()">Run synchronizer</button>
+          <button type="button" class="btn btn-warning" on-click="runParser()">Run paser</button>
           <button name="button" class="btn btn-primary" on-click="clearSynchronizerLog()">Clear log</button>
           <button type="button" class="btn btn-danger" on-click="stopSynchronizer()">Stop</button>
           </div>

@@ -1,3 +1,4 @@
+var proxy = require('../server/proxy');
 
 var app = module.exports = require('derby').createApp('directory', __filename);
 
@@ -41,6 +42,12 @@ AdminForm.prototype.runSynchronizer = function() {
   // this will trigger the change on the server side
   model.root.set('sync.start', Date());
 };
+
+AdminForm.prototype.runParser = function() {
+  console.log("client runParser");
+  var model = this.model;
+  proxy.parseData(model.root.set('cache.modules'), model);
+}
 
 AdminForm.prototype.stopSynchronizer = function() {
   console.log("client stopSynchronizer");
