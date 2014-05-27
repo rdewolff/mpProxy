@@ -1,5 +1,6 @@
+/*jslint node: true*/
 var ria = require('mpRiaApi');
-var proxy = require('./proxy');
+var proxy = require('../lib/proxy');
 
 // 4th Express
 var express = require('express');
@@ -51,12 +52,13 @@ exports.setup = function setup(app, options) {
     // server side model watching
     var model = store.createModel();
 
+    // TODO in progress
     // test manipulate model
     // console.dir(model.del('sync.inProgress2'));
-    model.add('sync', {val: 54, nom: 'Meuh?'});
-  // model.find('sync', {})
+    // model.add('sync', {val: 54, nom: 'Meuh?'});
+    // model.find('sync', {})
     // console.log(model.query('sync', {_id: '2d7b1220-511a-4605-b0e6-db9f3edbb2c5'}).fetch().get());
-    console.dir(model.at('sync.2d7b1220-511a-4605-b0e6-db9f3edbb2c5').get());
+    //console.dir(model.at('sync.2d7b1220-511a-4605-b0e6-db9f3edbb2c5').get());
     //console.log(model.get('sync.2d7b1220-511a-4605-b0e6-db9f3edbb2c5'));
     //console.log(model.get('sync')); // don't find anything
     //model.root.set('sync.inProgress2.addedNode', 'addedNode');

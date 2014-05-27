@@ -1,14 +1,15 @@
 <import: src="./home">
 <import: src="./edit">
 <import: src="./people">
-<import: src="./admin">
-<import: src="./mapping">
+<import: src="./adminConfig">
+<import: src="./adminMapping">
 
 <Title:>
-  eMuseumPlus : mpProxy
+  mpProxy
 
 <Head:>
-  <script src="/public/jquery-1.8.3.min.js"></script>
+  <!-- TODO how to include that properly? Cf. other Derby examples
+  <script src="/public/jquery-1.8.3.min.js"></script>-->
 
 <Body:>
   <view name="d-connection-alert"></view>
@@ -24,8 +25,8 @@
           <view name="nav-link" href="/people">People</view>
           <view name="nav-link" href="/people/new">Add somebody</view>
           <!-- mpProxy configuration file -->
-          <view name="nav-link" href="/admin">Admin</view>
-          <view name="nav-link" href="/mapping">Mapping</view>
+          <view name="nav-link" href="/admin/config">Config</view>
+          <view name="nav-link" href="/admin/mapping">Mapping</view>
         </ul>
       </div>
     </div>

@@ -1,3 +1,4 @@
+/*jslint node: true*/
 var derby = require('derby');
 var config = require('./config');
 

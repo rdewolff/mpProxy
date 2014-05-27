@@ -1,5 +1,5 @@
-
-// transform data from RIA to full web
+// shared code to synchronize data
+// can be used from client or server
 
 module.exports = {
   getAllFields: getAllFields,

@@ -1,6 +1,6 @@
 <index:>
   <div class="container">
-    <h2>Admin</h2>
+    <h2>Configuration (Admin - sync - config)</h2>
     <form role="form" class="well" on-submit="done()">
       <div class="row">
         <div class="col-xs-12">
@@ -31,9 +31,14 @@
           <field label="Log" has-error="">
             <textarea class="form-control input-sm" rows="7" readonly>{{#root.sync.log}}</textarea>
           </field>
-          <field label="Parsed" has-error="">
-            <textarea class="form-control input-sm" rows="7" readonly>{{#root.data.AvailableModules}}</textarea>
-          </field>
+
+          <!-- TODO : futur - show progress bar
+          <div class="progress">
+            <div class="progress-bar" style="width: 60%;">
+              <span class="sr-only">60% Complete</span>
+            </div>
+          </div>-->
+
           <div class="btn-group">
           <!-- TODO enable/disable depending on the status of the sync
           <button type="button" class="btn btn-primary" on-click="runSynchronizer()" disabled="{{if #root.sync.inProgress}}true{{/}}">Run synchronizer</button>

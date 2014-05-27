@@ -1,4 +1,5 @@
-var proxy = require('../server/proxy');
+
+var proxy = require('../lib/proxy');
 
 var app = module.exports = require('derby').createApp('directory', __filename);
 
@@ -18,59 +19,60 @@ app.get('/', function(page, model) {
 });
 
 // sorry but we need jquery, especially for ajax
+/*
 if (!typeof window == 'undefined') {
   if (!window.$) require('../../public/jquery-1.8.3.min.js');
-}
+}*/
 
-/* ADMIN */
+/******************************************************************************
+ * ADMIN
+ ******************************************************************************/
 
-app.get('/admin', function(page, model, params, next) {
+app.get('/admin/config', function(page, model, params, next) {
 
   model.subscribe('sync', function() {
-    page.render('admin');
+    page.render('adminConfig');
   });
 
 });
 
-app.component('admin', AdminForm);
+app.component('adminConfig', AdminForm);
 function AdminForm() {}
 
 AdminForm.prototype.runSynchronizer = function() {
-  console.log("client runSynchronizer");
   var model = this.model;
   // this will trigger the change on the server side
   model.root.set('sync.start', Date());
 };
 
 AdminForm.prototype.runParser = function() {
-  console.log("client runParser");
   var model = this.model;
   proxy.parseData(model.root.set('cache.modules'), model);
 }
 
 AdminForm.prototype.stopSynchronizer = function() {
-  console.log("client stopSynchronizer");
   var model = this.model;
   model.root.set('sync.inProgress', false); // force finish
 }
 
 AdminForm.prototype.clearSynchronizerLog = function() {
-  console.log("client clearSynchronizerLog");
   var model = this.model;
   model.root.set('sync.log', '');
 }
 
 /* MAPPING */
 
-app.get('/mapping', function(page, model, params, next) {
+app.get('/admin/mapping', function(page, model, params, next) {
 
   model.subscribe('sync', function() {
-    page.render('mapping')
+    page.render('adminMapping')
   });
 
 });
 
-/* PEOPLE */
+/******************************************************************************
+ * PEOPLE
+ ******************************************************************************/
 
 app.get('/people', function(page, model, params, next) {
   var peopleQuery = model.query('people', {});
