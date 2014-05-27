@@ -50,6 +50,18 @@ exports.setup = function setup(app, options) {
 
     // server side model watching
     var model = store.createModel();
+
+    // test manipulate model
+    // console.dir(model.del('sync.inProgress2'));
+    model.add('sync', {val: 54, nom: 'Meuh?'});
+  // model.find('sync', {})
+    // console.log(model.query('sync', {_id: '2d7b1220-511a-4605-b0e6-db9f3edbb2c5'}).fetch().get());
+    console.dir(model.at('sync.2d7b1220-511a-4605-b0e6-db9f3edbb2c5').get());
+    //console.log(model.get('sync.2d7b1220-511a-4605-b0e6-db9f3edbb2c5'));
+    //console.log(model.get('sync')); // don't find anything
+    //model.root.set('sync.inProgress2.addedNode', 'addedNode');
+
+
     // subscribe to changes
     model.subscribe('sync', function(err, msg){
 
@@ -90,6 +102,7 @@ exports.setup = function setup(app, options) {
 
             // this will enhance the raw structure from RIA
             proxy.parseData(data, model);
+
             // TODO must be able to parse this from client side directly
 
             model.root.set('sync.log', model.root.get('sync.log') + ' getAllObjectFromModule() done.')

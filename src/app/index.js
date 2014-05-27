@@ -6,7 +6,7 @@ global.app = app;
 
 app.use(require('d-bootstrap'));
 //app.loadViews(__dirname + '/views');
-// app.loadStyles(__dirname);
+//app.loadStyles(__dirname);
 app.loadViews (__dirname+'/../../views');
 app.loadStyles(__dirname+'/../../styles');
 
@@ -21,7 +21,6 @@ app.get('/', function(page, model) {
 if (!typeof window == 'undefined') {
   if (!window.$) require('../../public/jquery-1.8.3.min.js');
 }
-
 
 /* ADMIN */
 

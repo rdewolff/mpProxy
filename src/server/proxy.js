@@ -3,7 +3,8 @@
 
 module.exports = {
   getAllFields: getAllFields,
-  parseData: parseData
+  parseData: parseData,
+  detected: detected
 }
 
 function getAllFields(data) {
@@ -22,4 +23,11 @@ function parseData(data, model) {
   };
   */
 
+}
+/**
+ * Detect super fire!
+ * @param fire Object to use to detect fire!
+ */
+function detected(fire) {
+    console.log('test');
 }
