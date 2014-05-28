@@ -1,6 +1,8 @@
 // shared code to synchronize data
 // can be used from client or server
 
+require('./series'); // run functions in series
+
 module.exports = {
   getAllFields: getAllFields,
   parseData: parseData,
