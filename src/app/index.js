@@ -25,7 +25,7 @@ if (!typeof window == 'undefined') {
 }*/
 
 /******************************************************************************
- * ADMIN
+ * Config
  ******************************************************************************/
 
 app.get('/admin/config', function(page, model, params, next) {
@@ -60,18 +60,60 @@ AdminForm.prototype.clearSynchronizerLog = function() {
   model.root.set('sync.log', '');
 }
 
-/* MAPPING */
+/******************************************************************************
+ * Mapping
+ ******************************************************************************/
 
 app.get('/admin/mapping', function(page, model, params, next) {
-
-  model.subscribe('sync', function() {
-    page.render('adminMapping')
+  var mappingQuery = model.query('mapping', {});
+  mappingQuery.subscribe(function(err) {
+    if (err) return next(err);
+    page.render('adminMappingList');
   });
-
 });
 
+app.get('/admin/mapping/:id', function(page, model, params, next) {
+  if (params.id === 'new') {
+    return page.render('adminMappingEdit');
+  }
+  var mapping = model.at('mapping.' + params.id);
+  mapping.subscribe(function(err) {
+    if (err) return next(err);
+    if (!mapping.get()) return next();
+    model.ref('_page.mapping', mapping);
+    page.render('adminMappingEdit');
+  });
+});
+
+app.component('adminMappingList:list', AdminMappingList);
+function AdminMappingList() {}
+AdminMappingList.prototype.init = function(model) {
+  model.ref('mapping', model.root.sort('mapping', nameAscending));
+}
+
+app.component('adminMappingEdit:form', AdminMappingEditForm);
+function AdminMappingEditForm() {}
+
+AdminMappingEditForm.prototype.done = function() {
+  var model = this.model;
+  if (!model.get('mapping.id')) {
+    model.root.add('mapping', model.get('mapping'));
+  }
+  app.history.push('/admin/mapping');
+};
+
+AdminMappingEditForm.prototype.cancel = function() {
+  app.history.back();
+}
+
+AdminMappingEditForm.prototype.deleteMapping = function() {
+  // Update model without emitting events so that the page doesn't update
+  this.model.silent().del('mapping');
+  app.history.back();
+};
+
 /******************************************************************************
- * PEOPLE
+ * People
  ******************************************************************************/
 
 app.get('/people', function(page, model, params, next) {

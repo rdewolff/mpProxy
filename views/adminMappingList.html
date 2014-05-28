@@ -1,0 +1,36 @@
+<index:>
+  <div class="container">
+    <view name="list"></view>
+  </div>
+
+<list:>
+  {{if mapping}}
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Module</th>
+          <th>Query</th>
+          <th>Destination</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{each mapping}}
+          <tr>
+            <td><a href="/admin/mapping/{{this.id}}">{{this.name}}</a></td>
+            <td>{{this.description}}</td>
+            <td>{{this.module}}</td>
+            <td>{{this.query}}</td>
+            <td>{{this.destination}}</td>
+          </tr>
+        {{/}}
+      </tbody>
+    </table>
+  {{else}}
+    <h3>No mapping added yet.</h3>
+    <p>How about <a href="/admin/mapping/new">adding some</a>?</p>
+  {{/}}
+  <a class="btn btn-primary" href="/admin/mapping/new" role="button">Add new mapping</a>
+
+

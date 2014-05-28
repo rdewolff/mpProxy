@@ -1,0 +1,62 @@
+<index:>
+  <div class="container">
+    <view name="form" mapping="{{_page.mapping}}"></view>
+  </div>
+
+<form:>
+  <h2>
+    {{if mapping.id}}
+      Edit {{mapping.name}}
+      <a on-click="deleteMapping()" style="float:right;" class="btn btn-danger">Delete</a>
+    {{else}}
+      Add a new mapping
+    {{/}}
+  </h2>
+  <form role="form" class="well" on-submit="done()">
+    <div class="row">
+      <div class="col-xs-6">
+        <field label="Name" has-error="{{nameError}}">
+          <input type="text" class="form-control" as="nameInput" value="{{mapping.name}}" autofocus="{{!mapping.id}}">
+        </field>
+        <field label="Source module">
+          <dropdown value="{{mapping.module}}">
+            <option>Object</option>
+            <option>Artist</option>
+            <option>Other</option>
+          </dropdown>
+        </field>
+      </div>
+
+      <div class="col-xs-6">
+        <field label="Description">
+          <input class="form-control" height="20" value="{{mapping.description}}">
+        </field> 
+      </div>
+
+      <div class="col-xs-12">
+        <field label="Source query (field expression)">
+          <textarea class="form-control">{{mapping.query}}</textarea>
+        </field>
+        <field label="Destination">
+          <input class="form-control" value="{{mapping.destination}}">
+        </field> 
+        <field label="Preview">
+          <textarea class="form-control" readonly>{{mapping.preview}}</textarea>
+        </field>       
+      </div>
+
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+      {{if mapping.id}}Done{{else}}Add mapping{{/}}
+    </button>
+    {{unless mapping.id}}
+      &sp;<button type="button" class="btn btn-link" on-click="cancel()">Cancel</button>
+    {{/}}
+  </form>
+
+<field: element="field">
+  <div class="form-group{{if @hasError}} has-error{{/if}}">
+    <label class="control-label">{{@label}}</label>
+    {{@content}}
+  </div>
