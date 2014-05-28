@@ -1,5 +1,4 @@
 /*jslint node: true*/
-var ria = require('mpRiaApi');
 var proxy = require('../lib/proxy');
 
 // 4th Express
@@ -52,72 +51,23 @@ exports.setup = function setup(app, options) {
     // server side model watching
     var model = store.createModel();
 
-    // TODO in progress
-    // test manipulate model
-    // console.dir(model.del('sync.inProgress2'));
-    // model.add('sync', {val: 54, nom: 'Meuh?'});
-    // model.find('sync', {})
-    // console.log(model.query('sync', {_id: '2d7b1220-511a-4605-b0e6-db9f3edbb2c5'}).fetch().get());
-    //console.dir(model.at('sync.2d7b1220-511a-4605-b0e6-db9f3edbb2c5').get());
-    //console.log(model.get('sync.2d7b1220-511a-4605-b0e6-db9f3edbb2c5'));
-    //console.log(model.get('sync')); // don't find anything
-    //model.root.set('sync.inProgress2.addedNode', 'addedNode');
-
-
-    // subscribe to changes
+    /**
+     * Detect synchronisation trigger
+     */
     model.subscribe('sync', function(err, msg){
 
       // this listen on the change done by the client.
       model.on('change', 'sync.start', function(id, message) {
-
-        console.log('sync.start');
-
+        console.log("id      :" + id);
+        console.log("message :" + message);
+        
         model.root.set('sync.inProgress', true); // only 1 sync at a time
         model.root.set('sync.log',  model.root.get('sync.log') + '\nRun synchronizer : ' + model.root.get('sync.lastsync'));
 
-        // mpRiaApi go!
-        ria.setCreditentials(model.root.get('sync.username'), model.root.get('sync.password'));
-        ria.setInstanceUrl(model.root.get('sync.url'));
+        console.log("sync.start change detected server side");
 
-        // TODO handle error
-        ria._login(function() {
-
-          // get the module list
-          ria.getModuleList(function(err, data) {
-            // debug
-            //model.root.set('sync.log', model.root.get('sync.log') + '\nError: ' + err + 'Data' + data );
-            // store the data
-            model.root.del('data.AvailableModules');
-            model.root.set('data.AvailableModules', data);
-            // debug
-            //console.dir('\nerror: ' + err);
-            // console.log("\nData: %j", JSONdata); // show all json format
-            model.root.set('sync.log', model.root.get('sync.log') + ' getModuleList() done.')
-          }, 'array');
-
-
-          // TODO do this for all the required modules
-          ria.getAllObjectFromModule('Object', function(err, data) {
-
-            model.root.del('cache.modules');
-            model.root.set('cache.modules', data);
-
-            // this will enhance the raw structure from RIA
-            proxy.parseData(data, model);
-
-            // TODO must be able to parse this from client side directly
-
-            model.root.set('sync.log', model.root.get('sync.log') + ' getAllObjectFromModule() done.')
-            // debug
-            //model.root.set('sync.log', JSON.stringify(data));
-            // finish sync properly
-            model.root.set('sync.end', Date());
-            model.root.set('sync.inProgress', false); // finished
-            model.root.set('sync.duration', (Date.parse(model.root.get('sync.end'))-Date.parse(model.root.get('sync.start')))/1000)
-
-          }, 'json');
-
-        });
+        // trigger proxy synch
+        proxy.syncInit(model);
 
       });
 
