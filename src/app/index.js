@@ -29,10 +29,28 @@ if (!typeof window == 'undefined') {
  ******************************************************************************/
 
 app.get('/admin/config', function(page, model, params, next) {
+  // new method, use a single document to store the data and follow good practice
+  var adminConfig = model.query('adminConfig');
+  // if not adminConfig document exist in the collection, we add it
+  if (adminConfig.get().length = 0) {
+    objId = model.id(); // generate unique ID
+    model.root.add('adminConfig', {_id: objId}); // save it
+  } else {
+    objId = model.get()._id; // find the ID of the existing object
+  }
 
-  model.subscribe('sync', function() {
+  var adminConfigObject = model.at('adminConfig.' + objId);
+  adminConfigObject.subscribe(function(err) {
+    if (err) return next(err);
+    model.ref('adminConfig', adminConfigObject);
     page.render('adminConfig');
   });
+
+  // TODO remove old way
+  /*
+  model.subscribe('sync', function() {
+    page.render('adminConfig');
+  }); */
 
 });
 
@@ -168,7 +186,6 @@ EditForm.prototype.done = function() {
   }
   console.log(model.get('person.id'));
   if (!model.get('person.id')) {
-
     model.root.add('people', model.get('person'));
   }
   app.history.push('/people');
