@@ -28,21 +28,25 @@ if (!typeof window == 'undefined') {
  * Config
  ******************************************************************************/
 
+/*
 app.get('/admin/config', function(page, model, params, next) {
   // new method, use a single document to store the data and follow good practice
-  var adminConfig = model.query('adminConfig');
-  // if not adminConfig document exist in the collection, we add it
-  if (adminConfig.get().length = 0) {
-    objId = model.id(); // generate unique ID
-    model.root.add('adminConfig', {_id: objId}); // save it
-  } else {
-    objId = model.get()._id; // find the ID of the existing object
-  }
+  var adminConfig = model.query('adminConfig', {});
+  var objId;
+  adminConfig.fetch(function(err) {
+    // if not adminConfig document exist in the collection, we add it
+    if (adminConfig.get().length = 0) {
+      objId = model.id(); // generate unique ID
+      model.root.add('adminConfig', {_id: objId}); // save it
+    } else {
+      objId = model.get()._id; // find the ID of the existing object
+    }
+  });
 
   var adminConfigObject = model.at('adminConfig.' + objId);
   adminConfigObject.subscribe(function(err) {
     if (err) return next(err);
-    model.ref('adminConfig', adminConfigObject);
+    adminConfigObject.ref('adminConfig', adminConfigObject);
     page.render('adminConfig');
   });
 
@@ -52,7 +56,7 @@ app.get('/admin/config', function(page, model, params, next) {
     page.render('adminConfig');
   }); */
 
-});
+//});
 
 app.component('adminConfig', AdminForm);
 function AdminForm() {}
