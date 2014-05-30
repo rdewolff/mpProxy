@@ -1,13 +1,14 @@
 // shared code to synchronize data
 // can be used from client or server
 
-var ria = require('mpRiaApi');
+// TODO when enabling mpRiaApi an error breaks node
+// var ria = require('mpRiaApi');
 var series = require('./series'); // run functions in series
 
 module.exports = {
-  getAllFields: getAllFields,
+  /*getAllFields: getAllFields,
   parseData: parseData,
-  detected: detected,
+  detected: detected, */
   syncInit : syncInit
 }
 
