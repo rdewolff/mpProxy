@@ -28,39 +28,56 @@ if (!typeof window == 'undefined') {
  * Config
  ******************************************************************************/
 
-/*
+
 app.get('/admin/config', function(page, model, params, next) {
+
+  // Methode 1 :
+  /*
   // new method, use a single document to store the data and follow good practice
   var adminConfig = model.query('adminConfig', {});
   var objId;
   adminConfig.fetch(function(err) {
+
     // if not adminConfig document exist in the collection, we add it
-    if (adminConfig.get().length = 0) {
-      objId = model.id(); // generate unique ID
-      model.root.add('adminConfig', {_id: objId}); // save it
-    } else {
-      objId = model.get()._id; // find the ID of the existing object
+    if (adminConfig.get().length == 0) {
+      objId = model.id();
+      model.add('adminConfig', {id: objId, gen: objId, source: "https://mp-ria-X.zetcom.com/instanceName"}); // save it
     }
-  });
 
-  var adminConfigObject = model.at('adminConfig.' + objId);
-  adminConfigObject.subscribe(function(err) {
-    if (err) return next(err);
-    adminConfigObject.ref('adminConfig', adminConfigObject);
-    page.render('adminConfig');
-  });
+    //objId = adminConfig.get()[0].id; // find the ID of the first existing object
+    //console.log('objId='+objId);
 
-  // TODO remove old way
+    var adminConfigObject = model.at('adminConfig.' + objId);
+    adminConfigObject.subscribe(function(err) {
+      if (err) return next(err);
+      model.ref('adminConfig', adminConfigObject);
+      page.render('adminConfig');
+    });
+
+  });
+  */
+  // Methode 2
   /*
-  model.subscribe('sync', function() {
-    page.render('adminConfig');
-  }); */
+  var objId = model.id(); // generate new ID
+  model.set('adminConfig.'+objId, {
+    genIdCheck: objId,
+    source: 'http://url/instance'
+  });
 
-//});
+  page.render('adminConfig')
+  */
+  // Correct meethode maybe?
+  var adminConfig = model.query('adminConfig', {});
+  adminConfig.fetch(function(err){
+
+  })
+
+});
+
 
 app.component('adminConfig', AdminForm);
 function AdminForm() {}
-
+/* TODO redo
 AdminForm.prototype.runSynchronizer = function() {
   var model = this.model;
   // this will trigger the change on the server side
@@ -81,6 +98,7 @@ AdminForm.prototype.clearSynchronizerLog = function() {
   var model = this.model;
   model.root.set('sync.log', '');
 }
+*/
 
 /******************************************************************************
  * Mapping
