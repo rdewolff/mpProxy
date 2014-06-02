@@ -28,25 +28,57 @@ if (!typeof window == 'undefined') {
  * Config
  ******************************************************************************/
 
-
 app.get('/admin/config', function(page, model, params, next) {
 
+
   // Methode 1 :
-  /*
+
   // new method, use a single document to store the data and follow good practice
   var adminConfig = model.query('adminConfig', {});
   var objId;
   adminConfig.fetch(function(err) {
-
-    // if not adminConfig document exist in the collection, we add it
+    // if no document exist in the collection, we add it
     if (adminConfig.get().length == 0) {
-      objId = model.id();
-      model.add('adminConfig', {id: objId, gen: objId, source: "https://mp-ria-X.zetcom.com/instanceName"}); // save it
+      objId = model.add('adminConfig', {
+        source: "https://mp-ria-X.zetcom.com/instanceName",
+        username: "username"
+      });
+    } else {
+      console.dir(adminConfig.get());
+      objId = adminConfig.get()[0].id; // find the ID of the first existing object
     }
+    // debug
+    console.log('objId='+objId);
 
-    //objId = adminConfig.get()[0].id; // find the ID of the first existing object
-    //console.log('objId='+objId);
+    var adminConfigAt = model.at('adminConfig.'+objId);
+    adminConfigAt.subscribe(function(err){
+      if (err) return next(err);
+      // TODO THAT'S WHERE THE ERROR RESIDE ! REFERENCE ARE WRONG AND/OR CIRCULAR!
+      model.ref('adminConfig.'+objId, 'adminConfig'); // TODO multiple options here
+      page.render('adminConfig');
+    });
+    //ERROR : RECURING DATA IN MONGODB! DOUBLE FETCH/QUERY? HOW TO DO THIS PROPERLY?
+  });
 
+
+
+  // NEW SIMPLE TECHNIQUE NOT WORKING YET
+/*
+  var adminConfigQuery = model.query('adminconfig', {$limit: 1});
+  adminConfigQuery.subscribe(function(err){
+    if (err) return next(err);
+    if (!model.get('adminConfig')) {
+      model.add('adminConfig', {source: 'http://'});
+    }
+    model.ref('adminConfig', adminConfigQuery);
+    page.render('adminConfig');
+  });
+
+
+*/
+
+
+    /* blah
     var adminConfigObject = model.at('adminConfig.' + objId);
     adminConfigObject.subscribe(function(err) {
       if (err) return next(err);
@@ -54,8 +86,8 @@ app.get('/admin/config', function(page, model, params, next) {
       page.render('adminConfig');
     });
 
-  });
-  */
+  });*/
+
   // Methode 2
   /*
   var objId = model.id(); // generate new ID
@@ -66,17 +98,13 @@ app.get('/admin/config', function(page, model, params, next) {
 
   page.render('adminConfig')
   */
-  // Correct meethode maybe?
-  var adminConfig = model.query('adminConfig', {});
-  adminConfig.fetch(function(err){
 
-  })
 
 });
 
-
-app.component('adminConfig', AdminForm);
-function AdminForm() {}
+// TODO redo ^^
+//app.component('adminConfig', AdminForm);
+//function AdminForm() {}
 /* TODO redo
 AdminForm.prototype.runSynchronizer = function() {
   var model = this.model;

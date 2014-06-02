@@ -1,22 +1,35 @@
 <index:>
   <div class="container">
     <h2>Configuration (Admin - sync - config)</h2>
+
+    {{if adminConfig}}
+      <h3>ADMIN CONFIG HERE!</h3>
+    {{else}}
+      <h3>No admin config :(</h3>
+    {{/}}
+
+    {{each adminConfig}}
+      <tr>
+        <td>{{this.source}}</td>
+      </tr>
+    {{/}}
+
     <form role="form" class="well" on-submit="done()">
       <div class="row">
         <div class="col-xs-12">
           <field label="Source" has-error="">
-            <input type="text" class="form-control" as="nameInput" value="{{_page.config.source}}" autofocus="1">
+            <input type="text" class="form-control" as="nameInput" value="{{adminConfig.source}}" autofocus="1">
           </field>
           <field label="Username">
-            <input type="text" class="form-control" value="{{_page.username}}">
+            <input type="text" class="form-control" value="{{adminConfig.username}}">
           </field>
           <field label="Password">
-            <input type="text" class="form-control" value="{{_page.password}}">
+            <input type="text" class="form-control" value="{{adminConfig.password}}">
           </field>
         </div>
         <div class="col-xs-6">
           <field label="Synchronize Mode">
-            <dropdown value="{{_page.mode}}">
+            <dropdown value="{{adminConfig.mode}}">
               <option value="1">Manual</option>
               <option value="2">Every day</option>
               <option value="3">Every week</option>
