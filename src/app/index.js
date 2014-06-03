@@ -30,7 +30,7 @@ app.get('/admin/config', function(page, model, params, next) {
   adminConfig.subscribe(function(err) {
     var objId; // store the ID of the element to store the admin config
     // if no document exist in the collection, we add it
-    if (adminConfig.get().length == 0) { // adminConfig.get() might be enough to test
+    if (adminConfig.get().lqength == 0) { // adminConfig.get() might be enough to test
       objId = model.root.add('adminConfig', {
         source: "https://mp-ria-X.zetcom.com/instanceName",
         username: "username"
@@ -48,14 +48,25 @@ app.get('/admin/config', function(page, model, params, next) {
 
 });
 
-app.component('adminConfigEdit', AdminForm); // WHEN ENABLED - NO DATA COME FROM SUBSCRIBTION?!
-function AdminForm() {}
+// WHEN ENABLED - NO DATA COME FROM SUBSCRIBTION?! Has do be done in the init
+// app.component('adminConfigEdit', AdminForm);
+function AdminForm() {};
 
 AdminForm.prototype.init = function(model) {
   // TODO WE NEED TO MAP IT HERE ?
   // model.ref('adminConfig', model.root.get('adminConfig'));
   console.log('init?');
-}
+  var objId;
+  var model = this.model;
+  var adminConfig = model.query('adminConfig', {});
+
+  adminConfig.subscribe(function(err) {
+    objId = adminConfig.get()[0].id;
+    adminConfig = model.at('adminConfig.'+objId);
+    model.ref('_page.adminConfig', adminConfig);
+  });
+};
+
 AdminForm.prototype.runSynchronizer = function() {
   console.log('click');
   var model = this.model;
@@ -66,17 +77,17 @@ AdminForm.prototype.runSynchronizer = function() {
 AdminForm.prototype.runParser = function() {
   var model = this.model;
   // TODO proxy.parseData(model.root.set('cache.modules'), model);
-}
+};
 
 AdminForm.prototype.stopSynchronizer = function() {
   var model = this.model;
   // TODO model.root.set('sync.inProgress', false); // force finish
-}
+};
 
 AdminForm.prototype.clearSynchronizerLog = function() {
   var model = this.model;
   // TODO model.root.set('sync.log', '');
-}
+};
 
 /******************************************************************************
  * Mapping
