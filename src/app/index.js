@@ -42,15 +42,22 @@ app.get('/admin/config', function(page, model, params, next) {
     // change the scope of the subscription to the ID of the object found
     adminConfig = model.at('adminConfig.'+objId);
     model.ref('_page.adminConfig', adminConfig);
-    page.render('adminConfig');
+    page.render('adminConfigEdit');
 
   });
 
 });
 
-// app.component('adminConfig', AdminForm);
+app.component('adminConfigEdit', AdminForm); // WHEN ENABLED - NO DATA COME FROM SUBSCRIBTION?!
 function AdminForm() {}
+
+AdminForm.prototype.init = function(model) {
+  // TODO WE NEED TO MAP IT HERE ?
+  // model.ref('adminConfig', model.root.get('adminConfig'));
+  console.log('init?');
+}
 AdminForm.prototype.runSynchronizer = function() {
+  console.log('click');
   var model = this.model;
   // this will trigger the change on the server side
   // TODO model.root.set('sync.start', Date());
