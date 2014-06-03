@@ -1,35 +1,23 @@
 <index:>
   <div class="container">
-    <h2>Configuration (Admin - sync - config)</h2>
-
-    {{if adminConfig}}
-      <h3>ADMIN CONFIG HERE!</h3>
-    {{else}}
-      <h3>No admin config :(</h3>
-    {{/}}
-
-    {{each adminConfig}}
-      <tr>
-        <td>{{this.source}}</td>
-      </tr>
-    {{/}}
+    <h2>Admin Configuration</h2>
 
     <form role="form" class="well" on-submit="done()">
       <div class="row">
         <div class="col-xs-12">
           <field label="Source" has-error="">
-            <input type="text" class="form-control" as="nameInput" value="{{adminConfig.source}}" autofocus="1">
+            <input type="text" class="form-control" as="nameInput" value="{{_page.adminConfig.source}}" autofocus="1">
           </field>
           <field label="Username">
-            <input type="text" class="form-control" value="{{adminConfig.username}}">
+            <input type="text" class="form-control" value="{{_page.adminConfig.username}}">
           </field>
           <field label="Password">
-            <input type="text" class="form-control" value="{{adminConfig.password}}">
+            <input type="text" class="form-control" value="{{_page.adminConfig.password}}">
           </field>
         </div>
         <div class="col-xs-6">
           <field label="Synchronize Mode">
-            <dropdown value="{{adminConfig.mode}}">
+            <dropdown value="{{_page.adminConfig.mode}}">
               <option value="1">Manual</option>
               <option value="2">Every day</option>
               <option value="3">Every week</option>
@@ -38,11 +26,11 @@
           </field>
         </div>
         <div class="col-xs-6">
-            <b>Last sync end :</b> {{_page.end}}. Duration <strong>{{_page.duration}}</strong> seconds.
+            <b>Last sync end :</b> {{_page.adminConfig.end}}. Duration <strong>{{_page.adminConfig.mode}}</strong> seconds.
         </div>
         <div class="col-xs-12">
           <field label="Log" has-error="">
-            <textarea class="form-control input-sm" rows="7" readonly>{{_page.log}}</textarea>
+            <textarea class="form-control input-sm" rows="7" readonly>{{_page.adminConfig.log}}</textarea>
           </field>
 
           <!-- TODO : futur - show progress bar
