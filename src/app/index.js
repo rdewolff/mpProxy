@@ -48,31 +48,28 @@ app.get('/admin/config', function(page, model, params, next) {
 
 });
 
-// TODO redo ^^
-//app.component('adminConfig', AdminForm);
-//function AdminForm() {}
-/* TODO redo
+// app.component('adminConfig', AdminForm);
+function AdminForm() {}
 AdminForm.prototype.runSynchronizer = function() {
   var model = this.model;
   // this will trigger the change on the server side
-  model.root.set('sync.start', Date());
+  // TODO model.root.set('sync.start', Date());
 };
 
 AdminForm.prototype.runParser = function() {
   var model = this.model;
-  proxy.parseData(model.root.set('cache.modules'), model);
+  // TODO proxy.parseData(model.root.set('cache.modules'), model);
 }
 
 AdminForm.prototype.stopSynchronizer = function() {
   var model = this.model;
-  model.root.set('sync.inProgress', false); // force finish
+  // TODO model.root.set('sync.inProgress', false); // force finish
 }
 
 AdminForm.prototype.clearSynchronizerLog = function() {
   var model = this.model;
-  model.root.set('sync.log', '');
+  // TODO model.root.set('sync.log', '');
 }
-*/
 
 /******************************************************************************
  * Mapping
