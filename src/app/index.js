@@ -25,7 +25,7 @@ app.get('/', function(page, model) {
 app.get('/admin/config', function(page, model, params, next) {
 
   // use a single document to store the data and follow good practice
-  var adminConfig = model.query('adminConfig', {});
+  var adminConfig = model.root.query('adminConfig', {});
 
   adminConfig.subscribe(function(err) {
     var objId; // store the ID of the element to store the admin config
@@ -35,35 +35,35 @@ app.get('/admin/config', function(page, model, params, next) {
         source: "https://mp-ria-X.zetcom.com/instanceName",
         username: "username"
       });
+      console.log('adding '+objId);
     } else {
       objId = adminConfig.get()[0].id; // find the ID of the first existing object
+      console.log('retrieving '+objId);
     }
     // debug : console.log('objId='+objId);
     // change the scope of the subscription to the ID of the object found
-    adminConfig = model.at('adminConfig.'+objId);
-    model.ref('_page.adminConfig', adminConfig);
+    // model.ref('_page.adminConfig', model.root.at('adminConfig.'+objId));
     page.render('adminConfigEdit');
 
   });
-
 });
 
 // WHEN ENABLED - NO DATA COME FROM SUBSCRIBTION?! Has do be done in the init
-// app.component('adminConfigEdit', AdminForm);
+app.component('adminConfigEdit', AdminForm);
 function AdminForm() {};
 
 AdminForm.prototype.init = function(model) {
-  // TODO WE NEED TO MAP IT HERE ?
-  // model.ref('adminConfig', model.root.get('adminConfig'));
-  console.log('init?');
-  var objId;
-  var model = this.model;
-  var adminConfig = model.query('adminConfig', {});
+
+  // use a single document to store the data and follow good practice
+  var adminConfig = model.root.query('adminConfig', {});
 
   adminConfig.subscribe(function(err) {
-    objId = adminConfig.get()[0].id;
-    adminConfig = model.at('adminConfig.'+objId);
-    model.ref('_page.adminConfig', adminConfig);
+
+    var objId = adminConfig.get()[0].id;
+    // debug : console.log('objId='+objId);
+    // change the scope of the subscription to the ID of the object found
+    model.ref('_page.adminConfig', model.root.at('adminConfig.'+objId));
+
   });
 };
 
