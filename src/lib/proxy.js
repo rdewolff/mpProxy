@@ -9,17 +9,22 @@ function syncInit(model, source, username, password) {
 
   console.log('sync.start');
 
-  var data;
+  var syncData;
 
   // mpRiaApi go!
   ria.setCreditentials(username, password);
   ria.setInstanceUrl(source); // source url
 
   series.series([
+    function(next) { ria._login(next); },
+    function(next) { ria.getModuleList(function(err, data, next){syncData.moduleList = data; next();}, 'array'); },
+    // function(next) { ria.getAllObjectFromModule('Object',function(err, data, next){syncData.data = data; next();},'json'); },
+    /* function(next) { async(4, next); },
+    function(next) { async(5, next); },
+    function(next) { async(6, next); }, */
+  ], final);
 
-
-  ]);
-
+  /*
   // FIXME: handle error
   ria._login(function() {
 
@@ -59,6 +64,13 @@ function syncInit(model, source, username, password) {
     }, 'json');
 
   });
+  */
+}
+
+function final() {
+  // store data
+  console.log('store data');
+
 }
 
 /*
