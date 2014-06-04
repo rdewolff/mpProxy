@@ -51,20 +51,26 @@ exports.setup = function setup(app, options) {
     // server side model watching
     var model = store.createModel();
 
-    /**
+    /******************************************************************************
      * Detect synchronisation trigger
-     */
-    model.subscribe('sync', function(err, msg){
+     ******************************************************************************/
+    model.subscribe('adminSync', function(err, msg){
+
+      console.log('server subscribed');
 
       // this listen on the change done by the client.
-      model.on('change', 'sync.start', function(id, message) {
+      model.on('all', 'adminSync.*', function(id, message, p3) { // id = key, message = value
+        console.log('SERVER CHANGES ' + Date());
         console.log("id      :" + id);
         console.log("message :" + message);
-        
-        model.root.set('sync.inProgress', true); // only 1 sync at a time
-        model.root.set('sync.log',  model.root.get('sync.log') + '\nRun synchronizer : ' + model.root.get('sync.lastsync'));
+        console.dir(p3);
 
-        console.log("sync.start change detected server side");
+        //model.root.set('sync.inProgress', true); // only 1 sync at a time
+        //model.root.set('sync.log',  model.root.get('sync.log') + '\nRun synchronizer : ' + model.root.get('sync.lastsync'));
+        // model.root.set('adminConfig.'+id+'.mode', 2);
+        //var adminConfig = model.at();
+        // model.root.set('adminConfig.'+id+'.username', 'SERVER_SIDE_CHANGE_L0VE!');
+        //console.log("sync.start change detected server side");
 
         // trigger proxy synch
         proxy.syncInit(model);

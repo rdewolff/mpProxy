@@ -3,6 +3,15 @@ var proxy = require('../lib/proxy');
 
 var app = module.exports = require('derby').createApp('directory', __filename);
 
+// TODO: add const to store URL and DB path etc..
+/*
+app.config = {
+  collection : {
+    adminConfig : 'adminConfig',
+    href : ''
+  }
+}*/
+
 global.app = app;
 
 app.use(require('d-bootstrap'));
@@ -53,7 +62,6 @@ app.component('adminConfigEdit', AdminForm);
 function AdminForm() {};
 
 AdminForm.prototype.init = function(model) {
-  console.log('init');
   // use a single document to store the data and follow good practice
   var adminConfig = model.root.query('adminConfig', {});
 
@@ -76,8 +84,10 @@ AdminForm.prototype.init = function(model) {
 
 AdminForm.prototype.runSynchronizer = function() {
   var model = this.model;
-  console.log('click');
-  model.set('_page.adminConfig.start', Date());
+  console.log('runSynchronizer() click');
+  // working method : model.set('_page.adminConfig.sync.start', Date()); // but cannot detect change and modify change in same collection on the server side
+  model.root.add('adminSync', {start: Date(), data: ''});
+
   // debug : console.dir(model.get('_page.adminConfig'));
   // this will trigger the change on the server side
   // TODO: model.root.set('sync.start', Date());
