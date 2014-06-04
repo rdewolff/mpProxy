@@ -59,12 +59,15 @@ exports.setup = function setup(app, options) {
       console.log('server subscribed');
 
       // this listen on the change done by the client.
-      model.on('all', 'adminSync.*', function(id, message, p3) { // id = key, message = value
+      model.on('all', 'adminSync.*', function(id, message, args, p4) { // id = key, message = value
         console.log('SERVER CHANGES ' + Date());
         console.log("id      :" + id);
         console.log("message :" + message);
-        console.dir(p3);
+        console.dir(args);
+        // console.dir(p4);
 
+        // TODO: show that synchronizer is running somewhere in the model
+        
         //model.root.set('sync.inProgress', true); // only 1 sync at a time
         //model.root.set('sync.log',  model.root.get('sync.log') + '\nRun synchronizer : ' + model.root.get('sync.lastsync'));
         // model.root.set('adminConfig.'+id+'.mode', 2);
@@ -73,7 +76,7 @@ exports.setup = function setup(app, options) {
         //console.log("sync.start change detected server side");
 
         // trigger proxy synch
-        proxy.syncInit(model);
+        proxy.syncInit(model, args.config.source, args.config.username, args.config.password);
 
       });
 

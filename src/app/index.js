@@ -1,5 +1,5 @@
 
-var proxy = require('../lib/proxy');
+// var proxy = require('../lib/proxy');
 
 var app = module.exports = require('derby').createApp('directory', __filename);
 
@@ -57,7 +57,6 @@ app.get('/admin/config', function(page, model, params, next) {
   });
 });
 
-// WHEN ENABLED - NO DATA COME FROM SUBSCRIBTION?! Has do be done in the init
 app.component('adminConfigEdit', AdminForm);
 function AdminForm() {};
 
@@ -83,14 +82,18 @@ AdminForm.prototype.init = function(model) {
 };
 
 AdminForm.prototype.runSynchronizer = function() {
-  var model = this.model;
   console.log('runSynchronizer() click');
-  // working method : model.set('_page.adminConfig.sync.start', Date()); // but cannot detect change and modify change in same collection on the server side
-  model.root.add('adminSync', {start: Date(), data: ''});
 
-  // debug : console.dir(model.get('_page.adminConfig'));
+  var model = this.model;
   // this will trigger the change on the server side
-  // TODO: model.root.set('sync.start', Date());
+
+  // trigger and all the config data object is passed to the server via this
+  model.root.add('adminSync', {
+    start: Date()
+    , config: model.get('_page.adminConfig')
+    // , mapping: model.get('mapping') // TODO: pass the mapping from here directly? check if this make sense
+  });
+
 };
 
 AdminForm.prototype.runParser = function() {

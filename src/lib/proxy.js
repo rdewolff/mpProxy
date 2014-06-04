@@ -1,26 +1,26 @@
-// shared code to synchronize data
-// can be used from client or server
-
-// TODO when enabling mpRiaApi an error breaks node
-// var ria = require('mpRiaApi');
+var ria = require('mpRiaApi'); // watchout - mpRiaApi is a server side app - not going to work client side!
 var series = require('./series'); // run functions in series
 
 module.exports = {
-  /*getAllFields: getAllFields,
-  parseData: parseData,
-  detected: detected, */
   syncInit : syncInit
 }
 
-function syncInit(model) {
+function syncInit(model, source, username, password) {
 
   console.log('sync.start');
 
-  // mpRiaApi go!
-  ria.setCreditentials(model.root.get('sync.username'), model.root.get('sync.password'));
-  ria.setInstanceUrl(model.root.get('sync.url'));
+  var data;
 
-  // TODO handle error
+  // mpRiaApi go!
+  ria.setCreditentials(username, password);
+  ria.setInstanceUrl(source); // source url
+
+  series.series([
+
+
+  ]);
+
+  // FIXME: handle error
   ria._login(function() {
 
     // get the module list
