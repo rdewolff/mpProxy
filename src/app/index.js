@@ -21,28 +21,28 @@ app.get('/', function(page, model) {
 /******************************************************************************
  * Config
  ******************************************************************************/
-
+// TODO: clean whole functions once going live
 app.get('/admin/config', function(page, model, params, next) {
 
   // use a single document to store the data and follow good practice
   var adminConfig = model.root.query('adminConfig', {});
-
-  adminConfig.subscribe(function(err) {
+  // get the data
+  adminConfig.fetch(function(err) {
     var objId; // store the ID of the element to store the admin config
     // if no document exist in the collection, we add it
     if (adminConfig.get().length == 0) { // adminConfig.get() might be enough to test
       objId = model.root.add('adminConfig', {
-        source: "https://mp-ria-X.zetcom.com/instanceName",
-        username: "username"
+        source: 'https://mp-ria-X.zetcom.com/instanceName',
+        username: 'username',
+        password: 'pwd'
       });
-      console.log('adding '+objId);
+    }
+      // debug : console.log('adding '+objId);
+    /* debug :
     } else {
       objId = adminConfig.get()[0].id; // find the ID of the first existing object
-      console.log('retrieving '+objId);
-    }
-    // debug : console.log('objId='+objId);
-    // change the scope of the subscription to the ID of the object found
-    // model.ref('_page.adminConfig', model.root.at('adminConfig.'+objId));
+      // debug : console.log('retrieving '+objId);
+    } */
     page.render('adminConfigEdit');
 
   });
@@ -53,13 +53,20 @@ app.component('adminConfigEdit', AdminForm);
 function AdminForm() {};
 
 AdminForm.prototype.init = function(model) {
-
+  console.log('init');
   // use a single document to store the data and follow good practice
   var adminConfig = model.root.query('adminConfig', {});
 
   adminConfig.subscribe(function(err) {
+    // TODO: Derby issue? Data still not there when added from app.get() route... derby's too fast!
+    if (adminConfig.get().length > 0) {
+        var objId = adminConfig.get()[0].id;
+        // TODO: store the ID in a temp variable
+    } else {
+      // refresh page
+      app.history.push('/admin/config');
+    }
 
-    var objId = adminConfig.get()[0].id;
     // debug : console.log('objId='+objId);
     // change the scope of the subscription to the ID of the object found
     model.ref('_page.adminConfig', model.root.at('adminConfig.'+objId));
@@ -68,25 +75,27 @@ AdminForm.prototype.init = function(model) {
 };
 
 AdminForm.prototype.runSynchronizer = function() {
-  console.log('click');
   var model = this.model;
+  console.log('click');
+  model.set('_page.adminConfig.start', Date());
+  // debug : console.dir(model.get('_page.adminConfig'));
   // this will trigger the change on the server side
-  // TODO model.root.set('sync.start', Date());
+  // TODO: model.root.set('sync.start', Date());
 };
 
 AdminForm.prototype.runParser = function() {
   var model = this.model;
-  // TODO proxy.parseData(model.root.set('cache.modules'), model);
+  // TODO: proxy.parseData(model.root.set('cache.modules'), model);
 };
 
 AdminForm.prototype.stopSynchronizer = function() {
   var model = this.model;
-  // TODO model.root.set('sync.inProgress', false); // force finish
+  // TODO: model.root.set('sync.inProgress', false); // force finish
 };
 
 AdminForm.prototype.clearSynchronizerLog = function() {
   var model = this.model;
-  // TODO model.root.set('sync.log', '');
+  // TODO: model.root.set('sync.log', '');
 };
 
 /******************************************************************************
