@@ -30,7 +30,7 @@ app.get('/admin/config', function(page, model, params, next) {
   adminConfig.subscribe(function(err) {
     var objId; // store the ID of the element to store the admin config
     // if no document exist in the collection, we add it
-    if (adminConfig.get().lqength == 0) { // adminConfig.get() might be enough to test
+    if (adminConfig.get().length == 0) { // adminConfig.get() might be enough to test
       objId = model.root.add('adminConfig', {
         source: "https://mp-ria-X.zetcom.com/instanceName",
         username: "username"
