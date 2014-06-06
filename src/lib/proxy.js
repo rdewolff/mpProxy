@@ -16,13 +16,22 @@ function syncInit(model, source, username, password) {
   ria.setInstanceUrl(source); // source url
 
   series.series([
-    function(next) { ria._login(next); },
-    function(next) { ria.getModuleList(function(err, data, next){syncData.moduleList = data; next();}, 'array'); },
+    function(next) {
+      ria._login(next);
+    },
+    function(next) {
+      var parentNext = next;
+      ria.getModuleList(
+        function(err, data){
+          syncData = { moduleList: data };
+          parentNext();
+        }, 'array');
+    }
     // function(next) { ria.getAllObjectFromModule('Object',function(err, data, next){syncData.data = data; next();},'json'); },
     /* function(next) { async(4, next); },
     function(next) { async(5, next); },
     function(next) { async(6, next); }, */
-  ], final);
+  ], final(syncData));
 
   /*
   // FIXME: handle error
@@ -67,9 +76,10 @@ function syncInit(model, source, username, password) {
   */
 }
 
-function final() {
+function final(syncData) {
   // store data
   console.log('store data');
+  console.dir(syncData);
 
 }
 
