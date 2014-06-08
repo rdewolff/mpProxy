@@ -19,7 +19,7 @@
     "d-d3-barchart": "~0.1.0",
     "d-codemirror": "git+https://github.com/codeparty/d-codemirror.git",
     "d-showdown": "git+https://github.com/codeparty/d-showdown.git",
-	"express-session": "~1.2.0",
+    "express-session": "~1.2.0",
     "nconf": "~0.6.0",
     "connect-mongo": "~0.4.1",
     "racer-browserchannel": "~0.1.1",
@@ -30,7 +30,7 @@
     "compression": "~1.0.2",
     "redis": "~0.10.0",
     "connect-redis": "~2.0.0",
-    "mpriaapi" : "git+https://github.com/rdewolff/mpRiaApi.git"
+    "mpriaapi": "git+https://github.com/rdewolff/mpRiaApi.git"
   },
   "keywords": [
     "zetcom",
@@ -47,7 +47,9 @@
     "start": "node index.js"
   },
   "optionalDependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "mocha": "~1.20.0"
+  },
   "engines": {
     "node": "0.10.x"
   },

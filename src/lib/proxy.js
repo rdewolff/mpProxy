@@ -5,11 +5,11 @@ module.exports = {
   syncInit : syncInit
 }
 
+var syncData;
+
 function syncInit(model, source, username, password) {
 
   console.log('sync.start');
-
-  var syncData;
 
   // mpRiaApi go!
   ria.setCreditentials(username, password);
@@ -31,7 +31,7 @@ function syncInit(model, source, username, password) {
     /* function(next) { async(4, next); },
     function(next) { async(5, next); },
     function(next) { async(6, next); }, */
-  ], final(syncData));
+  ], final);
 
   /*
   // FIXME: handle error
@@ -76,7 +76,7 @@ function syncInit(model, source, username, password) {
   */
 }
 
-function final(syncData) {
+function final() {
   // store data
   console.log('store data');
   console.dir(syncData);
