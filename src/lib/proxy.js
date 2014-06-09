@@ -43,6 +43,7 @@ function syncInit(model, source, username, password) {
       ria.getAllModuleDefinition(
         function(err, data) {
           model.root.set('data.allModuleDefinition', data);
+          // TODO: changes the default $ character (cf https://github.com/Leonidas-from-XIV/node-xml2js, option name "attrkey")
           parentNext();
         }
       );
