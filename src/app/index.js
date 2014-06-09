@@ -23,7 +23,46 @@ app.loadStyles(__dirname+'/../../styles');
 app.component(require('d-connection-alert'));
 app.component(require('d-before-unload'));
 
+/******************************************************************************
+ * Home
+ ******************************************************************************/
 app.get('/', function(page, model) {
+
+  // Model manipulation test
+  console.log('***** model manipulation start *****');
+  config = model.at('admin.config');
+  model.subscribe(config, function(err){
+    if (err) next(err);
+    config.set('lapin');
+    config.set({
+      user: 'lapin',
+      password: 'superlapin',
+      url: 'impressivelapin!',
+      note: {
+        premier: 'bla',
+        deuxieme: 'rebla'
+      }
+    });
+    console.log(config.get('user'));
+    // config.set({user: 'chamelle'}); // this removes all the others data
+    // user = config.scope('note.permier'); user.set('chamelle'); // this is not working either
+    config.set({
+      user: 'chamelle',
+      password: config.get('password'),
+      url: config.get('url'),
+      note: {
+        premier : config.get('note.premier'),
+        deuxieme: 'deuxième note'
+      }
+    })
+    console.log(config.get('user'));
+    config.set('erased'); // change structure
+    console.log(config.get('user'));
+
+  });
+
+  console.log('***** model manipulation stop *****');
+
   page.render('home');
 });
 
@@ -85,9 +124,7 @@ AdminForm.prototype.runSynchronizer = function() {
   console.log('runSynchronizer() click');
 
   var model = this.model;
-  // this will trigger the change on the server side
-
-  // trigger and all the config data object is passed to the server via this
+  // this will trigger the change on the server side & pass config data object to server
   model.root.add('adminSync', {
     start: Date()
     , config: model.get('_page.adminConfig')

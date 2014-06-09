@@ -5,16 +5,26 @@ module.exports = {
   syncInit : syncInit
 }
 
-var syncData;
+var syncData = {
+  moduleList: '',
+  module : {
+    object : ''
+  }
+};
 
 function syncInit(model, source, username, password) {
 
   console.log('sync.start');
+  /* test model get data from this proxy */
+  var adminConfig = model.root.query('adminConfig', {});
+  adminConfig.fetch(function(err) {
+    console.dir(adminConfig.get());
+  });
 
   // mpRiaApi go!
   ria.setCreditentials(username, password);
   ria.setInstanceUrl(source); // source url
-
+  console.log('model.get():' + model.root.get('adminConfig')); // test access to model working properly
   series.series([
     function(next) {
       ria._login(next);
@@ -23,11 +33,20 @@ function syncInit(model, source, username, password) {
       var parentNext = next;
       ria.getModuleList(
         function(err, data){
-          syncData = { moduleList: data };
+          syncData.moduleList = data; // save data
           parentNext();
         }, 'array');
-    }
-    // function(next) { ria.getAllObjectFromModule('Object',function(err, data, next){syncData.data = data; next();},'json'); },
+    },
+    function(next) {
+      var parentNext = next;
+      ria.getAllObjectFromModule(
+        'Object',
+        function(err, data) {
+          syncData.module.object = data; // save data
+          parentNext();
+        },
+        'json');
+      },
     /* function(next) { async(4, next); },
     function(next) { async(5, next); },
     function(next) { async(6, next); }, */
@@ -80,6 +99,7 @@ function final() {
   // store data
   console.log('store data');
   console.dir(syncData);
+  console.dir(syncData.module.object);
 
 }
 
