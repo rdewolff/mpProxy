@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "coffee-script": "~1.7.1",
-    "derby": "0.6.0-alpha8",
+    "derby": "~0.6",
     "derby-starter": "~0.1.0",
     "express": "~3.4.8",
     "d-connection-alert": "~0.1.0",
