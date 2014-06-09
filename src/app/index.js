@@ -18,7 +18,7 @@ app.use(require('d-bootstrap'));
 //app.loadViews(__dirname + '/views');
 //app.loadStyles(__dirname);
 app.loadViews (__dirname+'/../../views');
-app.loadStyles(__dirname+'/../../styles');
+// app.loadStyles(__dirname+'/../../styles');
 
 app.component(require('d-connection-alert'));
 app.component(require('d-before-unload'));

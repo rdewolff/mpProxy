@@ -34,8 +34,18 @@ function syncInit(model, source, username, password) {
       ria.getModuleList(
         function(err, data){
           syncData.moduleList = data; // save data
+          model.root.setNull('data.moduleList', data); // FIXME: only set new value if null
           parentNext();
         }, 'array');
+    },
+    function(next) {
+      var parentNext = next;
+      ria.getAllModuleDefinition(
+        function(err, data) {
+          model.root.set('data.allModuleDefinition', data);
+          parentNext();
+        }
+      );
     },
     function(next) {
       var parentNext = next;
@@ -43,6 +53,8 @@ function syncInit(model, source, username, password) {
         'Object',
         function(err, data) {
           syncData.module.object = data; // save data
+          console.dir(data.application.modules);
+          model.root.set('data.object', data.application.modules);
           parentNext();
         },
         'json');
