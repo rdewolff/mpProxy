@@ -9,7 +9,7 @@
   "dependencies": {
     "coffee-script": "~1.7.1",
     "derby": "0.6.0-alpha8",
-    "derby-starter": "~0.1.0",
+    "derby-starter": "~0.2.0",
     "express": "~3.4.8",
     "d-connection-alert": "~0.1.0",
     "d-before-unload": "~0.1.0",
@@ -19,7 +19,7 @@
     "d-d3-barchart": "~0.1.0",
     "d-codemirror": "git+https://github.com/codeparty/d-codemirror.git",
     "d-showdown": "git+https://github.com/codeparty/d-showdown.git",
-	"express-session": "~1.2.0",
+    "express-session": "~1.2.0",
     "nconf": "~0.6.0",
     "connect-mongo": "~0.4.1",
     "racer-browserchannel": "~0.1.1",

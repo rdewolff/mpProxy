@@ -54,11 +54,11 @@ function syncInit(model, source, username, password) {
         'Object',
         function(err, data) {
           syncData.module.object = data; // save data
-          console.dir(data.application.modules);
-          model.root.set('data.object', data.application.modules);
+          console.dir(data.application);
+          model.root.set('data.object', data); // NO $ possible!
           parentNext();
         },
-        'json');
+        'xml');
       },
     /* function(next) { async(4, next); },
     function(next) { async(5, next); },
